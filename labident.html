@@ -8,10 +8,12 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: white;">
         <div class="container">
             <div class="navbar-header navbar-left">
-                <a class="navbar-brand no-break-out" href="/">LABiDent Jobs</a>
+                <a class="navbar-brand no-break-out" href="/">
+                    <img style="margin-top: -11px;" src="images/LABiDent_logo_2_rgb.png">
+                </a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -27,33 +29,55 @@
             </div>
         </div>
     </nav>
+
     <div>
-      {{> Jobs}}
+        {{> weekStripe}}
+    </div>
+
+    <div>
+      {{> jobs}}
     </div>
 </body>
 
-<template name="Jobs">
+<template name="weekStripe">
     <div class="container bootcards-container">
         <div class="row">
-            <div class="col-sm-6 bootcards-list" id="jobList">
+            <div class="bootcards-list">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> fullcalendar options}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="jobs">
+    <div class="container bootcards-container">
+        <div class="row">
+            <div class="col-sm-6 bootcards-list">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
                         <h3 class="panel-title pull-left">3 jobs total already in 2015</h3>
+                        <a class="btn pull-right pull-right faMore" href="">
+                            <i class="fa fa-plus fa-2x"></i>
+                        </a>
                     </div>
                     <div class="panel-body">
                         <div class="search-form">
                             <div class="row">
-                                <div class="col-xs-9">
+                                <div class="col-sm-8">
                                     <div class="form-group">
                                         <input type="text" class="form-control" placeholder="Search Jobs...">
                                         <i class="fa fa-search"></i>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
-                                    <a class="btn btn-primary pull-right" href="">
-                                        <i class="fa fa-plus"></i>
-                                        <span>Add Job</span>
+                                <div class="col-sm-4">
+                                    <a class="pull-right" href="" style="margin-top: 8px">
+                                        <i class="fa fa-square-o"></i>
+                                        <span>In Progress</span>
                                     </a>
                                 </div>
                             </div>
@@ -64,7 +88,7 @@
                         <a class="list-group-item active" href="">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: #ffffff">0103001</h4>
+                                    <h4 class="list-group-item-heading" style="color: white">50103001</h4>
                                     <p class="list-group-item-text">Burning Core</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -79,7 +103,7 @@
                         <a class="list-group-item" href="">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: blue">0105002</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">50105002</h4>
                                     <p class="list-group-item-text">John Doe</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -94,7 +118,7 @@
                         <a class="list-group-item" href="">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: blue">0106003</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">50106003</h4>
                                     <p class="list-group-item-text">Jane Doe</p>
                                 </div>
                                 <div class="col-sm-6">
@@ -109,292 +133,380 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 bootcards-list" id="jobDetailList">
-                <div id="jobDetail">
-                    <!--job-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix">
-                            <i class="fa fa-2x fa-cog pull-left"></i>
-                            <h3 class="panel-title pull-left">0103001</h3>
-                            <a class="btn btn-primary pull-right" href="">
-                                <i class="fa fa-pencil"></i>
-                                <span>Edit</span>
-                            </a>
-                        </div>
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <label>Arrival</label>
-                                <h4 class="list-group-item-heading" style="color: blue">12-27-14</h4>
-                            </div>
-                            <div class="list-group-item">
-                                <label>Warranty</label>
-                                <h4 class="list-group-item-heading" style="color: blue">2 years</h4>
-                            </div>
-                            <div class="list-group-item">
-                                <label>Memo</label>
-                                <h4 class="list-group-item-heading" style="color: blue">
-                                    lorem ipsum...
-                                </h4>
-                            </div>
-                        </div>
-                        <!--div class="panel-footer"></div-->
+            <div class="col-sm-6 bootcards-list">
+                <!--job-->
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <i class="fa fa-2x fa-cog pull-left"></i>
+                        <h2 class="pull-left" style="margin-top: -3px">50103001</h2>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-pencil fa-2x"></i>
+                        </a>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-print fa-2x"></i>
+                        </a>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-barcode fa-2x"></i>
+                        </a>
                     </div>
-                    <!--client-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix">
-                            <i class="fa fa-2x fa-user pull-left"></i>
-                            <h3 class="panel-title pull-left">Client</h3>
-                            <a class="btn btn-primary pull-right" href="">
-                                <i class="fa fa-pencil"></i>
-                                <span>Edit</span>
-                            </a>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Arrival</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">12-27-14 11:23</h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Due</label>
+                                    <h4 class="list-group-item-heading" style="color: darkseagreen">01-07-15 15:00</h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <i class="fa fa-check-square-o fa-3x" style="color: green"></i>
+                                </div>
+                            </div>
                         </div>
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>Name</label>
-                                        <h4 class="list-group-item-heading" style="color: blue">Clive Owen</h4>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label>Age</label>
-                                        <h4 class="list-group-item-heading color" style="color: blue">54</h4>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label>Sex</label>
-                                        <h4 class="list-group-item-heading" style="color: blue">male</h4>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <label>Shade</label>
-                                        <h4 class="list-group-item-heading" style="color: blue">A 3*5</h4>
-                                    </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Invoice Number</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">
+                                        0123456789
+                                    </h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>DHL Tracking</label>
+                                    <h4 class="list-group-item-heading">
+                                        <a style="color: blue;text-decoration: underline;" href="">87654321</a>
+                                    </h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Warranty</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">2 years</h4>
                                 </div>
                             </div>
-
-                            <div class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <i class="fa fa-camera fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">18</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">17</span>
-                                        <i class="fa fa-check-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">16</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">15</span>
-                                        <i class="fa fa-check-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">14</span>
-                                        <i class="fa fa-check-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">13</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">12</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">11</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan"></span>
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">21</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">22</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">23</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">24</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">25</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">26</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">27</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">28</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">48</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">47</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">46</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">45</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">44</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">43</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">42</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">41</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-
-                                    <div class="col-sm-3">
-                                        <span class="list-group-item-text dentSpan"></span>
-                                    </div>
-
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">31</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">32</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">33</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">34</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">35</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">36</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">37</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <span class="list-group-item-text dentSpan">38</span>
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
-                        <!--div class="panel-footer"></div-->
+                        <div class="list-group-item">
+                            <label>Memo</label>
+                            <h4 class="list-group-item-heading" style="color: blue">
+                                lorem ipsum...
+                            </h4>
+                        </div>
                     </div>
-                    <!--work steps-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix">
-                            <i class="fa fa-2x fa-cog pull-left"></i>
-                            <h3 class="panel-title pull-left">Work Steps</h3>
-                            <a class="btn btn-primary pull-right" href="">
-                                <i class="fa fa-plus"></i>
-                                <span>Add Step</span>
-                            </a>
-                        </div>
-                        <div class="list-group">
-                            <a class="list-group-item" href="">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h4 class="list-group-item-heading" style="color: blue">work step 1</h4>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="list-group-item-text">Return By</p>
-                                        <h4 class="list-group-item-text" style="color: blue">01-15-15 13:00</h4>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="list-group-item" href="">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h4 class="list-group-item-heading" style="color: blue">work step 2</h4>
-                                        <p class="list-group-item-text"></p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <p class="list-group-item-text">Return By</p>
-                                        <h4 class="list-group-item-text" style="color: blue">01-21-15 09:00</h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!--div class="panel-footer"></div-->
-                    </div>
-                    <!--dentist-->
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix">
-                            <i class="fa fa-2x fa-user pull-left"></i>
-                            <h3 class="panel-title pull-left">Dentist</h3>
-                            <a class="btn btn-primary pull-right" href="">
-                                <i class="fa fa-pencil"></i>
-                                <span>Edit</span>
-                            </a>
-                        </div>
-                        <div class="list-group">
-                            <div class="list-group-item">
-                                <label>Name</label>
-                                <h4 class="list-group-item-heading" style="color: blue">Burning Core</h4>
-                            </div>
-                            <div class="list-group-item">
-                                <label>E-mail</label>
-                                <h4 class="list-group-item-heading" style="color: blue">a@b.com</h4>
-                            </div>
-                            <div class="list-group-item">
-                                <label>Phone</label>
-                                <h4 class="list-group-item-heading" style="color: blue">+36301234567</h4>
-                            </div>
-                        </div>
-                        <!--div class="panel-footer"></div-->
-                    </div>
-
+                    <!--div class="panel-footer"></div-->
                 </div>
+                <!--client-->
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <i class="fa fa-2x fa-user pull-left"></i>
+                        <h3 class="panel-title pull-left">Patient</h3>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-pencil fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Name</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">Clive Owen</h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Age</label>
+                                    <h4 class="list-group-item-heading color" style="color: blue">54</h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Sex</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">male</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <i class="fa fa-camera fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <i class="fa fa-file fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Case</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">case</h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Frame</label>
+                                    <h4 class="list-group-item-heading color" style="color: blue">frame</h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Rep</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">rep</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- teeth -->
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Material</label>
+                                    <h4 class="list-group-item-heading color" style="color: blue">material</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label>Work Type</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">work type</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <!-- implant -->
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text implantSpan"></span>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text implantSpan">3.5</span>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text implantSpan"></span>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text implantSpan">3.5</span>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text implantSpan">3.5</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan"></span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">18</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">17</span>
+                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">16</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">15</span>
+                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">14</span>
+                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">13</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">12</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">11</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan"></span>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">21</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">22</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">23</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">24</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">25</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">26</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">27</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">28</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">48</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">47</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">46</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">45</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">44</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">43</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">42</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">41</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <span class="list-group-item-text dentSpan"></span>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">31</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">32</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">33</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">34</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">35</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">36</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">37</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="list-group-item-text dentSpan">38</span>
+                                    <i class="fa fa-square-o fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--work steps-->
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <i class="fa fa-2x fa-users pull-left"></i>
+                        <h3 class="panel-title pull-left">3rd Parties</h3>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-pencil fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="list-group-item-text">Name</p>
+                                    <h4 class="list-group-item-heading" style="color: blue">Company 1</h4>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="list-group-item-text">Refrence Number</p>
+                                    <h4 class="list-group-item-text" style="color: blue">567891234</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="list-group-item-text">Name</p>
+                                    <h4 class="list-group-item-heading" style="color: blue">Company 2</h4>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="list-group-item-text">Refrence Number</p>
+                                    <h4 class="list-group-item-text" style="color: blue">678912345</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="panel-footer"></div-->
+                </div>
+                <!--dentist-->
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <i class="fa fa-2x fa-user-md pull-left"></i>
+                        <h3 class="panel-title pull-left">Dentist</h3>
+                        <a class="btn pull-right faMore" href="">
+                            <i class="fa fa-pencil fa-2x"></i>
+                        </a>
+                    </div>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <label>Name</label>
+                            <h4 class="list-group-item-heading" style="color: blue">Burning Core</h4>
+                        </div>
+                        <div class="list-group-item">
+                            <label>E-mail</label>
+                            <h4 class="list-group-item-heading" style="color: blue">a@b.com</h4>
+                        </div>
+                        <div class="list-group-item">
+                            <label>Phone</label>
+                            <h4 class="list-group-item-heading" style="color: blue">+36301234567</h4>
+                        </div>
+                    </div>
+                    <!--div class="panel-footer"></div-->
+                </div>
+
+                <!--/div-->
             </div>
         </div>
     </div>

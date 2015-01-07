@@ -1,5 +1,5 @@
 .list-group-item i {
-    width: 0px;
+    width: 0;
 }
 
 .col-sm-1 {
@@ -11,10 +11,28 @@
 }
 
 .dentSpan  {
-    font-size: 116%;
+    font-size: 108%;
+}
+
+.implantSpan  {
+    font-size: 15px;
+    color: blue;
 }
 
 .navbar {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
+.fc-toolbar h2 {
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.fc-widget-header th {
+    font-weight: normal;
+}
+
+.faMore {
+    padding-right: 2px;
+    padding-left: 2px;
+}

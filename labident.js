@@ -1,5 +1,15 @@
 if (Meteor.isClient) {
 
+  Template.weekStripe.helpers ({
+    options: function () {
+      return {
+        defaultView: 'basicWeek',
+        firstDay: 1,
+        height: 150
+      }
+    }
+  });
+
 }
 
 if (Meteor.isServer) {
