@@ -8,6 +8,27 @@
 </head>
 
 <body>
+</body>
+
+<template name="home">
+    {{> nav}}
+    {{> weekStripe}}
+    {{> jobs}}
+</template>
+
+<template name="newJob">
+    {{> nav}}
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{> quickForm id="newJob" collection="Jobs" type="insert" validation="keyup"}}
+            </div>
+        </div>
+    </div   >
+</template>
+
+<template name="nav">
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: white;">
         <div class="container">
             <div class="navbar-header navbar-left">
@@ -26,18 +47,25 @@
                         {{>loginButtons}}
                     </ul>
                 </div>
+                <!--div class="navbar-header">
+                    <ul class="nav navbar-nav">
+                        Home
+                    </ul>
+                </div>
+                <div class="navbar-header">
+                    <ul class="nav navbar-nav">
+                        Dashboard
+                    </ul>
+                </div-->
             </div>
         </div>
     </nav>
+</template>
 
-    <div>
-        {{> weekStripe}}
-    </div>
-
-    <div>
-      {{> jobs}}
-    </div>
-</body>
+<template name="askLogin">
+    {{> nav}}
+    <p>please login</p>
+</template>
 
 <template name="weekStripe">
     <div class="container bootcards-container">
@@ -61,7 +89,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
                         <h3 class="panel-title pull-left">3 jobs total already in 2015</h3>
-                        <a class="btn pull-right pull-right faMore" href="">
+                        <a class="btn pull-right pull-right faMore simptip-position-right simptip-smooth simptip-fade" data-tooltip="Add a New Job" href="new">
                             <i class="fa fa-plus fa-2x"></i>
                         </a>
                     </div>
@@ -249,7 +277,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label>Prep</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">Prep</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">prep</h4>
                                 </div>
                             </div>
                         </div>
@@ -281,7 +309,7 @@
                                     <span class="list-group-item-text implantSpan"></span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
+                                    <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBioMod">
                                         <span class="list-group-item-text implantSpan">3.5</span>
                                     </div>
                                 </div>
@@ -414,7 +442,7 @@
                                     <span class="list-group-item-text dentSpan">41</span>
                                 </div>
 
-                                <div class="col-sm-12">
+                                <div class="col-sm-11">
                                     <span class="list-group-item-text dentSpan"></span>
                                 </div>
 
@@ -549,3 +577,21 @@
     </div>
 </template>
 
+<template name="notFoundPage">
+    {{> nav}}
+    <div id="notFoundPage" class="page">
+        <div class="container">
+            <div class="row">
+                <div class="centered col col-md-3"></div>
+                <div class="centered col col-md-6">
+                    <div id="notFoundErrorMessage">
+                        <!--img id="notFoundImage" class="fullwidth" src="/img/notFoundError.png"-->
+                        <h2 class="notFoundError">404 Page Not Found</h2><br/>
+                        <h5 class="notFoundErrorInstructions">check you spelled the URL correctly or click to go back to the homepage</h5>
+                    </div>
+                </div>
+                <div class="centered col col-md-3"></div>
+            </div>
+        </div>
+    </div>
+</template>

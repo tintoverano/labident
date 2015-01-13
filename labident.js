@@ -1,5 +1,4 @@
 if (Meteor.isClient) {
-
   Template.weekStripe.helpers ({
     options: function () {
       return {
@@ -10,6 +9,11 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.notFoundPage.events({
+    'click #notFoundErrorMessage':function(){
+      Router.go('/');
+    }
+  });
 }
 
 if (Meteor.isServer) {

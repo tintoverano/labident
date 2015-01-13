@@ -6,7 +6,7 @@
     width: 22px;
 }
 
-.col-sm-12 {
+.col-sm-11 {
     width: 24px;
 }
 
@@ -17,10 +17,6 @@
 .implantSpan  {
     font-size: 15px;
     color: blue;
-}
-
-.navbar {
-    margin-bottom: 0;
 }
 
 .fc-toolbar h2 {
@@ -35,4 +31,8 @@
 .faMore {
     padding-right: 2px;
     padding-left: 2px;
+}
+
+.media-body {
+    display: inherit;
 }
