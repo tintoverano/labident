@@ -66,31 +66,54 @@ implantTypes = [
     {label: "DENTSPLY FRIALIT / XiVe 5.5", value: "DENTSPLY FRIALIT / XiVe 5.5", id: 63, dia: "5.5"}
 ];
 
-Schemas = {};
+//Schemas = {};
 
-Jobs = new Mongo.Collection("jobs");
+Jobs = new Mongo.Collection ("jobs");
 
 Jobs.attachSchema (new SimpleSchema ({
-    jobDetails: {
+    jobNumber: {
+        type: String,
+        defaultValue: "111",
+        autoform: {
+          omit: true
+        }
+    },
+    createdAt: {
+        type: Date,
+        defaultValue: new Date(),
+        autoform: {
+            omit: true
+        }
+    },
+/*    createdBy: {
+        type: String,
+        defaultValue: Meteor.userId (),
+        autoform: {
+            omit: true
+        }
+    },
+/*    jobDetails: {
         type: Object
-    },
-    'jobDetails.arrivalDate': {
+    },*/
+    arrivalDate: {
         type: Date,
+        defaultValue: new Date(),
         autoform: {
             afFieldInput: {
                 type: "bootstrap-datetimepicker"
             }
         }
     },
-    'jobDetails.dueDate': {
+    dueDate: {
         type: Date,
+        defaultValue: new Date(),
         autoform: {
             afFieldInput: {
                 type: "bootstrap-datetimepicker"
             }
         }
     },
-    'jobDetails.status': {
+    status: {
         type: String,
         autoform: {
             type: "select-radio-inline",
@@ -103,15 +126,15 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.invoiceNumber': {
+    invoiceNumber: {
         type: String,
         optional: true,
         max: 20
     },
-    'jobDetails.shipping': {
+    shipping: {
         type: Object
     },
-    'jobDetails.shipping.shipper': {
+    'shipping.shipper': {
         type: String,
         autoform: {
             type: "select-radio-inline",
@@ -125,11 +148,11 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.shipping.trackingNumber': {
+    'shipping.trackingNumber': {
         type: String,
         optional: true
     },
-    'jobDetails.warranty': {
+    warranty: {
         type: String,
         autoform: {
             type: "select-radio-inline",
@@ -146,7 +169,7 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.memo': {
+    memo: {
         type: String,
         optional: true,
         autoform: {
@@ -207,6 +230,9 @@ Jobs.attachSchema (new SimpleSchema ({
         optional: true
     },
     'patient.images.$': {
+        type: Object
+    },
+    'patient.images.$.name': {
         type: String,
         autoform: {
             afFieldInput: {
@@ -219,6 +245,9 @@ Jobs.attachSchema (new SimpleSchema ({
         optional: true
     },
     'patient.files.$': {
+        type: Object
+    },
+    'patient.files.$.name': {
         type: String,
         autoform: {
             afFieldInput: {
@@ -416,6 +445,26 @@ Jobs.attachSchema (new SimpleSchema ({
                 ];
             }
         }
+    },
+    'patient.alloy': {
+        type: String,
+        optional: true,
+        max: 10
+    },
+    'patient.artNr': {
+        type: String,
+        optional: true,
+        max: 50
+    },
+    'patient.lotNr': {
+        type: String,
+        optional: true,
+        max: 50
+    },
+    'patient.refNr': {
+        type: String,
+        optional: true,
+        max: 50
     },
     'patient.teeth': {
         type: Array,

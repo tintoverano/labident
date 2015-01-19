@@ -18,14 +18,19 @@
 
 <template name="newJob">
     {{> nav}}
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                {{> quickForm id="newJob" collection="Jobs" type="insert" validation="keyup"}}
+    {{> weekStripe}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> quickForm id="newJob" collection="Jobs" type="insert" validation="keyup"}}
+                    </div>
+                </div>
             </div>
         </div>
-    </div   >
+    </div>
 </template>
 
 <template name="nav">
@@ -64,17 +69,15 @@
 
 <template name="askLogin">
     {{> nav}}
-    <p>please login</p>
+    <h2>please login</h2>
 </template>
 
 <template name="weekStripe">
-    <div class="container bootcards-container">
+    <div class="container" style="margin-top: 70px;">
         <div class="row">
-            <div class="bootcards-list">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        {{> fullcalendar options}}
-                    </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{> fullcalendar options}}
                 </div>
             </div>
         </div>
@@ -82,91 +85,63 @@
 </template>
 
 <template name="jobs">
-    <div class="container bootcards-container">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-6 bootcards-list">
+            <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
-                        <h3 class="panel-title pull-left">3 jobs total already in 2015</h3>
+                        <h3 class="pull-left"  style="margin-top: 1px">x jobs total already in 2015</h3>
                         <a class="btn pull-right pull-right faMore simptip-position-right simptip-smooth simptip-fade" data-tooltip="Add a New Job" href="new">
                             <i class="fa fa-plus fa-2x"></i>
                         </a>
                     </div>
-                    <div class="panel-body">
-                        <div class="search-form">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Search Jobs...">
-                                        <i class="fa fa-search"></i>
-                                    </div>
+
+                    <div class="list-group">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-7">
+                                <div class="form-group" style="position:relative; top: 18px">
+                                    <input type="text" class="form-control" placeholder="Search Jobs...">
+                                    <i class="fa fa-search magnifier"></i>
                                 </div>
-                                <div class="col-sm-4">
-                                    <a class="pull-right" href="" style="margin-top: 8px">
-                                        <i class="fa fa-square-o"></i>
-                                        <span>In Progress</span>
-                                    </a>
-                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <a class="pull-right" href="" style="margin-top: 26px">
+                                    <i class="fa fa-square-o"></i>
+                                    <span>In Progress</span>
+                                </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="list-group">
-                        <a class="list-group-item active" href="">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: white">50103001</h4>
-                                    <p class="list-group-item-text">Burning Core</p>
+                    {{#each jobs}}
+                        <div class="list-group">
+                            <a id="jobListItem" class="list-group-item {{#if notActive this.index}}active{{/if}}" href="">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <h4 class="list-group-item-heading">job number #{{this.index}}</h4>
+                                        <p class="list-group-item-text">{{dentist.name}}</p>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <p class="list-group-item-text" style="padding-bottom: 6px">{{simpleDate arrivalDate}}</p>
+                                        <p class="list-group-item-text">{{patient.name}}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">12-27-14</p>
-                                    <p class="list-group-item-text">Clive Owen</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    {{/each}}
 
-                    <div class="list-group">
-                        <a class="list-group-item" href="">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: blue">50105002</h4>
-                                    <p class="list-group-item-text">John Doe</p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">12-28-14</p>
-                                    <p class="list-group-item-text">Bruce Willis</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="list-group">
-                        <a class="list-group-item" href="">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h4 class="list-group-item-heading" style="color: blue">50106003</h4>
-                                    <p class="list-group-item-text">Jane Doe</p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">12-29-14</p>
-                                    <p class="list-group-item-text">Christian Bale</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!--div class="panel-footer"></div-->
                 </div>
             </div>
 
-            <div class="col-sm-6 bootcards-list">
+            {{#with job}}
+                <div class="col-sm-6">
                 <!--job-->
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
-                        <h2 class="pull-left" style="margin-top: -3px">50103001</h2>
+                        <h2 class="pull-left" style="margin-top: -3px">{{this._id}}</h2>
                         <a class="btn pull-right faMore" href="">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
@@ -182,11 +157,11 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label>Arrival</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">12-27-14 11:23</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{simpleDateTime arrivalDate}}</h4>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Due</label>
-                                    <h4 class="list-group-item-heading" style="color: darkseagreen">01-07-15 15:00</h4>
+                                    <h4 class="list-group-item-heading" style="color: green">{{simpleDateTime dueDate}}</h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <i class="fa fa-check-square-o fa-3x" style="color: green;margin-top: 6px"></i>
@@ -198,26 +173,24 @@
                                 <div class="col-sm-5">
                                     <label>Invoice Number</label>
                                     <h4 class="list-group-item-heading" style="color: blue">
-                                        0123456789
+                                        {{invoiceNumber}}
                                     </h4>
                                 </div>
                                 <div class="col-sm-5">
-                                    <label>DHL Tracking</label>
+                                    <label>{{shipping.shipper}}</label>
                                     <h4 class="list-group-item-heading">
-                                        <a style="color: blue;text-decoration: underline;" href="">87654321</a>
+                                        <a style="color: blue;" href="">{{shipping.trackingNumber}}</a>
                                     </h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <label>Warranty</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">2 years</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{warranty}}</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="list-group-item">
                             <label>Memo</label>
-                            <h4 class="list-group-item-heading" style="color: blue">
-                                lorem ipsum...
-                            </h4>
+                            <h4 class="list-group-item-heading" style="color: blue">{{memo}}</h4>
                         </div>
                     </div>
                     <!--div class="panel-footer"></div-->
@@ -226,7 +199,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-user pull-left"></i>
-                        <h3 class="panel-title pull-left">Patient</h3>
+                        <h3 class="pull-left" style="margin-top: 1px">Patient</h3>
                         <a class="btn pull-right faMore" href="">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
@@ -236,32 +209,36 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label>Name</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">Clive Owen</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.name}}</h4>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Age</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">54</h4>
+                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.age}}</h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <label>Sex</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">male</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.sex}}</h4>
                                 </div>
                             </div>
                         </div>
 
                         <div class="list-group-item">
                             <div class="row">
-                                <div class="col-sm-1">
-                                    <i class="fa fa-camera fa-2x"></i>
-                                </div>
+                                {{#each patient.images}}
+                                    <div class="col-sm-1 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{name}}">
+                                        <i class="fa fa-image fa-2x"></i>
+                                    </div>
+                                {{/each}}
                             </div>
                         </div>
 
                         <div class="list-group-item">
                             <div class="row">
-                                <div class="col-sm-1">
-                                    <i class="fa fa-file fa-2x"></i>
-                                </div>
+                                {{#each patient.files}}
+                                    <div class="col-sm-1 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{name}}">
+                                        <i class="fa fa-file fa-2x"></i>
+                                    </div>
+                                {{/each}}
                             </div>
                         </div>
 
@@ -269,15 +246,15 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label>Shade</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">shade</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.shade}}</h4>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Frame</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">frame</h4>
+                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.frame}}</h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <label>Prep</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">prep</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.prep}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -287,17 +264,34 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label>Work Type</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">TRIOS INBOX + MODEL-LESS</h4>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.workType}}</h4>
                                 </div>
                                 <div class="col-sm-5">
                                     <label>Material</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">material</h4>
+                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.material}}</h4>
                                 </div>
                                 <div class="col-sm-2">
                                     <label>+Alloy</label>
                                     <h4 class="list-group-item-heading color" style="color: blue">
-                                        17.42<span style="color: black;font-size: 14px">gr</span>
+                                        {{patient.alloy}}<span style="color: black;font-size: 14px">gr</span>
                                     </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>Art</label>
+                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.artNr}}</h4>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label>Lot</label>
+                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.lotNr}}</h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>Ref</label>
+                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.refNr}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -306,26 +300,155 @@
                             <!-- implant -->
                             <div class="row">
                                 <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 18}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 18}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 18}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 17}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 17}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 17}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 16}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 16}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 16}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 15}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 15}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 15}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 14}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 14}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 14}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 13}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 13}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 13}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 12}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 12}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 12}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopLeft 11}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopLeft 11}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopLeft 11}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+
+                                <div class="col-sm-1">
                                     <span class="list-group-item-text implantSpan"></span>
                                 </div>
+
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBioMod">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantTopRight 21}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 21}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 21}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <span class="list-group-item-text implantSpan"></span>
+                                    {{#if checkImplantTopRight 22}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 22}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 22}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantTopRight 23}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 23}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 23}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantTopRight 24}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 24}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 24}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopRight 25}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 25}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 25}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopRight 26}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 26}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 26}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopRight 27}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 27}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 27}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantTopRight 28}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameTopRight 28}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterTopRight 28}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+
                             </div>
 
                             <div class="row">
@@ -337,35 +460,35 @@
                             <div class="row">
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">18</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 18}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">17</span>
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 17}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">16</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 16}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">15</span>
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 15}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">14</span>
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 14}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">13</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 13}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">12</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 12}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">11</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopLeft 11}} fa-2x"></i>
                                 </div>
 
                                 <div class="col-sm-1">
@@ -374,182 +497,300 @@
 
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">21</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 21}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">22</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 22}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">23</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 23}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">24</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 24}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">25</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 25}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">26</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 26}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">27</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 27}} fa-2x"></i>
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan">28</span>
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconTopRight 28}} fa-2x"></i>
                                 </div>
                             </div>
                         </div>
 
                         <div class="list-group-item">
+
                             <div class="row">
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 48}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">48</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 47}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">47</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 46}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">46</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 45}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">45</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-check-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 44}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">44</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 43}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">43</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 42}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">42</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomLeft 41}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">41</span>
                                 </div>
 
-                                <div class="col-sm-11">
+                                <div class="col-sm-1">
                                     <span class="list-group-item-text dentSpan"></span>
                                 </div>
 
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 31}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">31</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 32}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">32</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 33}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">33</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 34}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">34</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 35}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">35</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 36}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">36</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 37}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">37</span>
                                 </div>
                                 <div class="col-sm-1">
-                                    <i class="fa fa-square-o fa-2x"></i>
+                                    <i class="fa {{checkImplantIconBottomRight 38}} fa-2x"></i>
                                     <span class="list-group-item-text dentSpan">38</span>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-sm-1">
-                                    <span class="list-group-item-text implantSpan"></span>
+                                    {{#if checkImplantBottomLeft 48}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 48}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 48}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-bottom simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantBottomLeft 47}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 47}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 47}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <span class="list-group-item-text implantSpan"></span>
+                                    {{#if checkImplantBottomLeft 46}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 46}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 46}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-bottom simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantBottomLeft 45}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 45}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 45}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                                 <div class="col-sm-1">
-                                    <div class="simptip-position-bottom simptip-warning simptip-smooth simptip-fade" data-tooltip="AlphaBio">
-                                        <span class="list-group-item-text implantSpan">3.5</span>
-                                    </div>
+                                    {{#if checkImplantBottomLeft 44}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 44}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 44}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomLeft 43}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 43}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 43}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomLeft 42}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 42}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 42}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomLeft 41}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomLeft 41}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomLeft 41}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+
+                                <div class="col-sm-11">
+                                    <span class="list-group-item-text dentSpan"></span>
+                                </div>
+
+
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 31}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 31}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 31}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 32}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 32}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 32}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 33}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 33}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 33}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 34}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 34}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 34}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 35}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 35}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 35}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 36}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 36}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 36}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 37}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 37}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 37}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
+                                </div>
+                                <div class="col-sm-1">
+                                    {{#if checkImplantBottomRight 38}}
+                                        <div class="simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImplantNameBottomRight 38}}">
+                                            <span class="list-group-item-text implantSpan">{{getDiameterBottomRight 38}}</span>
+                                        </div>
+                                    {{else}}
+                                        <span class="list-group-item-text implantSpan"></span>
+                                    {{/if}}
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
                 </div>
-                <!--work steps-->
+
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-users pull-left"></i>
-                        <h3 class="panel-title pull-left">3rd Parties</h3>
+                        <h3 class="pull-left" style="margin-top: 1px">3rd Parties</h3>
                         <a class="btn pull-right faMore" href="">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                     </div>
                     <div class="list-group">
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">Name</p>
-                                    <h4 class="list-group-item-heading" style="color: blue">Company 1</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">Refrence Number</p>
-                                    <h4 class="list-group-item-text" style="color: blue">567891234</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">Name</p>
-                                    <h4 class="list-group-item-heading" style="color: blue">Company 2</h4>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="list-group-item-text">Refrence Number</p>
-                                    <h4 class="list-group-item-text" style="color: blue">678912345</h4>
+                        {{#each thirdParties}}
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Name</label>
+                                        <h4 class="list-group-item-heading" style="color: blue">{{name}}</h4>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Refrence Number</label>
+                                        <h4 class="list-group-item-heading" style="color: blue">{{referenceNumber}}</h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {{/each }}
                     </div>
-                    <!--div class="panel-footer"></div-->
                 </div>
-                <!--dentist-->
+
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-user-md pull-left"></i>
-                        <h3 class="panel-title pull-left">Dentist</h3>
+                        <h3 class="pull-left" style="margin-top: 1px">Dentist</h3>
                         <a class="btn pull-right faMore" href="">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
@@ -557,22 +798,20 @@
                     <div class="list-group">
                         <div class="list-group-item">
                             <label>Name</label>
-                            <h4 class="list-group-item-heading" style="color: blue">Burning Core</h4>
+                            <h4 class="list-group-item-heading" style="color: blue">{{dentist.name}}</h4>
                         </div>
                         <div class="list-group-item">
                             <label>E-mail</label>
-                            <h4 class="list-group-item-heading" style="color: blue">a@b.com</h4>
+                            <h4 class="list-group-item-heading" style="color: blue">{{dentist.email}}</h4>
                         </div>
                         <div class="list-group-item">
                             <label>Phone</label>
-                            <h4 class="list-group-item-heading" style="color: blue">+36301234567</h4>
+                            <h4 class="list-group-item-heading" style="color: blue">{{dentist.phone}}</h4>
                         </div>
                     </div>
-                    <!--div class="panel-footer"></div-->
                 </div>
-
-                <!--/div-->
             </div>
+            {{/with}}
         </div>
     </div>
 </template>

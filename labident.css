@@ -36,3 +36,17 @@
 .media-body {
     display: inherit;
 }
+
+i.magnifier {
+    position: relative;
+    top: -27px;
+    left: 6px;
+}
+
+.form-control {
+    padding-left: 22px;
+}
+
+a.list-group-item .list-group-item-heading {
+    color: blue;
+}
