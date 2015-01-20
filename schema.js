@@ -128,9 +128,9 @@ Jobs.attachSchema (new SimpleSchema ({
     },
     status: {
         type: String,
+        defaultValue: "In progress",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "In progress",
             options: function () {
                 return [
                     {label: "In progress", value: "In progress"},
@@ -149,9 +149,9 @@ Jobs.attachSchema (new SimpleSchema ({
     },
     'shipping.shipper': {
         type: String,
+        defaultValue: "Labident",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "Labident",
             options: function () {
                 return [
                     {label: "Labident", value: "Labident"},
@@ -167,9 +167,9 @@ Jobs.attachSchema (new SimpleSchema ({
     },
     warranty: {
         type: String,
+        defaultValue: "2 years",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "2 years",
             options: function () {
                 return [
                     {label: "None", value: "None"},
