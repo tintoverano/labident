@@ -262,39 +262,48 @@
                         <!-- teeth -->
                         <div class="list-group-item">
                             <div class="row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-10">
                                     <label>Work Type</label>
                                     <h4 class="list-group-item-heading" style="color: blue">{{patient.workType}}</h4>
-                                </div>
-                                <div class="col-sm-5">
-                                    <label>Material</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.material}}</h4>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label>+Alloy</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">
-                                        {{patient.alloy}}<span style="color: black;font-size: 14px">gr</span>
-                                    </h4>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label>Art</label>
-                                    <h4 class="list-group-item-heading" style="color: blue">{{patient.artNr}}</h4>
+
+                        {{#each patient.materialDetails}}
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label>Material</label>
+                                        <h4 class="list-group-item-heading color" style="color: blue">{{material}}</h4>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label>+Alloy</label>
+                                        <h4 class="list-group-item-heading color" style="color: blue">{{alloy}}</h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>Amount</label>
+                                        <h4 class="list-group-item-heading color" style="color: blue">
+                                            {{alloyAmount}}<span style="color: black;font-size: 14px">gr</span>
+                                        </h4>
+                                    </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <label>Lot</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.lotNr}}</h4>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label>Ref</label>
-                                    <h4 class="list-group-item-heading color" style="color: blue">{{patient.refNr}}</h4>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label>Art</label>
+                                        <h4 class="list-group-item-heading" style="color: blue">{{artNr}}</h4>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <label>Lot</label>
+                                        <h4 class="list-group-item-heading color" style="color: blue">{{lotNr}}</h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>Ref</label>
+                                        <h4 class="list-group-item-heading color" style="color: blue">{{refNr}}</h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {{/each}}
 
                         <div class="list-group-item">
                             <!-- implant -->

@@ -435,7 +435,14 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'patient.material':{
+    'patient.materialDetails': {
+      type: Array,
+      optional: true
+    },
+    'patient.materialDetails.$': {
+      type: Object
+    },
+    'patient.materialDetails.$.material':{
         type: String,
         optional: true,
         autoform: {
@@ -459,22 +466,38 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'patient.alloy': {
-        type: String,
-        optional: true,
-        max: 10
+    'patient.materialDetails.$.alloy':{
+      type: String,
+      optional: true,
+      autoform: {
+        type: "select",
+        options: function () {
+          return [
+            {label: "Alloy 1", value: "Alloy 1"},
+            {label: "Alloy 2", value: "Alloy 2"},
+            {label: "Alloy 3", value: "Alloy 3"},
+            {label: "Alloy 4", value: "Alloy 4"}
+          ];
+        }
+      }
     },
-    'patient.artNr': {
+    'patient.materialDetails.$.alloyAmount': {
+      type: String,
+      label: "Alloy amount (gr)",
+      optional: true,
+      max: 10
+    },
+    'patient.materialDetails.$.artNr': {
         type: String,
         optional: true,
         max: 50
     },
-    'patient.lotNr': {
+    'patient.materialDetails.$.lotNr': {
         type: String,
         optional: true,
         max: 50
     },
-    'patient.refNr': {
+    'patient.materialDetails.$.refNr': {
         type: String,
         optional: true,
         max: 50
@@ -491,8 +514,8 @@ Jobs.attachSchema (new SimpleSchema ({
     'patient.teeth.$.tooth': {
         type: Number,
         optional: true,
-        min: 1,
-        max: 50
+        min: 11,
+        max: 48
     },
     'patient.teeth.$.implantPlatform': {
         type: String,

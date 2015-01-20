@@ -72,7 +72,6 @@ if (Meteor.isClient) {
     },
 
     checkImplantTopLeft: function (aTooth) {
-      //var theJob = Jobs.findOne ({"patient.teeth": {$elemMatch: {tooth: aTooth}}});
       console.log ("checkImplantTopLeft");
       if (theJob != null) {
         console.log (theJob._id);
@@ -163,10 +162,10 @@ if (Meteor.isClient) {
         console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
-          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+          var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
           if (!implant)
               return false;
-          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+          var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
           if (!marking)
               return false;
 
@@ -177,25 +176,16 @@ if (Meteor.isClient) {
           toothData["marking"] = marking.icon;
 
           teethBottomLeft.push(toothData);
-
-          return true;
         }
       }
       if (_.size (teethBottomLeft) > 0) {
-        var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.marking;
+        var theTooth = _.findWhere (teethBottomLeft, {"tooth": aTooth});
+        if (theTooth)
+          return theTooth.marking;
       }
       return "fa-square-o";
     },
 
-/*    addJobTopLeft: function () {
-      var jobTeethData = {};
-      jobTeethData["jobID"] = Session.get ("job_id");
-      jobTeethData["teethTopLeft"] = teethTopLeft;
-      jobTeeth.push (jobTeethData);
-    },
-*/
     checkImplantTopRight: function (aTooth) {
       console.log ("checkImplantTopRight");
       if (theJob != null) {
@@ -304,20 +294,12 @@ if (Meteor.isClient) {
         }
       }
       if (_.size (teethBottomRight) > 0) {
-        var toothDoc = _.findWhere(teethBottomRight, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.marking;
+        var theTooth = _.findWhere(teethBottomRight, {"tooth": aTooth});
+        if (theTooth)
+          return theTooth.marking;
       }
       return "fa-square-o";
     }
-
-    /*    addJobTopRight: function () {
-          var jobTeethData = {};
-          jobTeethData["jobID"] = Session.get ("job_id");
-          jobTeethData["teethTopRight"] = teethTopRight;
-          jobTeeth.push (jobTeethData);
-        }
-    */
   });
 
   Template.jobs.events ({

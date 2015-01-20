@@ -8,7 +8,6 @@ meteor-platform
 insecure
 ian:bootstrap-3
 accounts-password
-natestrauser:font-awesome
 accounts-base
 ian:accounts-ui-bootstrap-3
 tsega:bootstrap3-datetimepicker
@@ -26,3 +25,4 @@ zimme:select2-bootstrap3-css
 momentjs:moment
 underscore
 mrt:mongo-counter
+fortawesome:fontawesome
