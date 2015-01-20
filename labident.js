@@ -67,6 +67,18 @@ if (Meteor.isClient) {
       return moment(aDate).format('lll');
     },
 
+    jobStatus: function (aStatus) {
+      if (aStatus != "Finished")
+        return "fa-cogs";
+      return "fa fa-check-square-o fa-3x";
+    },
+
+    jobStatusColor: function (aStatus) {
+      if (aStatus != "Finished")
+        return "red";
+      return "green";
+    },
+
     notActive: function (index) {
       return (index == Session.get ("activeJob"));
     },
