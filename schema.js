@@ -66,7 +66,20 @@ implantTypes = [
     {label: "DENTSPLY FRIALIT / XiVe 5.5", value: "DENTSPLY FRIALIT / XiVe 5.5", id: 63, dia: "5.5"}
 ];
 
-//Schemas = {};
+markingTypes = [
+    {label: "CROWN/ABUTMENT", value: "CROWN/ABUTMENT", icon:"fa-circle-o"},
+    {label: "IMPLANT CROWN/ABUTMENT", value: "IMPLANT CROWN/ABUTMENT", icon:"fa-dot-circle-o"},
+    {label: "IMPLANT ABUTMENT + CROWN", value: "IMPLANT ABUTMENT + CROWN", icon:"fa-bullseye"},
+    {label: "PONTIC", value: "PONTIC", icon:"fa-times"},
+    {label: "PRECISION ATTACHMENT", value: "PRECISION ATTACHMENT", icon:"fa-ils"},
+    {label: "DENTURE TOOTH", value: "DENTURE TOOTH", icon:"fa-times-circle"},
+    {label: "COMBINATION CASE", value: "COMBINATION CASE", icon:"fa-toggle-on"},
+    {label: "CANTILEVER PONTIC", value: "CANTILEVER PONTIC", icon:"fa-adjust"},
+    {label: "POST & CORE", value: "POST & CORE", icon:"fa-arrow-down"},
+    {label: "POST & CORE + CROWN/ABUTMENT", value: "POST & CORE + CROWN/ABUTMENT", icon:"fa-arrow-circle-o-down"},
+    {label: "INLAY/ONLAY", value: "INLAY/ONLAY", icon:"fa-caret-square-o-down"},
+    {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
+];
 
 Jobs = new Mongo.Collection ("jobs");
 
@@ -497,20 +510,7 @@ Jobs.attachSchema (new SimpleSchema ({
         autoform: {
             type: "select2",
             options: function () {
-                return [
-                    {label: "CROWN/ABUTMENT", value: "CROWN/ABUTMENT", icon:"fa-circle-o"},
-                    {label: "IMPLANT CROWN/ABUTMENT", value: "IMPLANT CROWN/ABUTMENT", icon:"fa-dot-circle-o"},
-                    {label: "IMPLANT ABUTMENT + CROWN", value: "IMPLANT ABUTMENT + CROWN", icon:"fa-bullseye"},
-                    {label: "PONTIC", value: "PONTIC", icon:"fa-times"},
-                    {label: "PRECISION ATTACHMENT", value: "PRECISION ATTACHMENT", icon:"fa-ils"},
-                    {label: "DENTURE TOOTH", value: "DENTURE TOOTH", icon:"fa-times-circle"},
-                    {label: "COMBINATION CASE", value: "COMBINATION CASE", icon:"fa-toggle-on"},
-                    {label: "CANTILEVER PONTIC", value: "CANTILEVER PONTIC", icon:"fa-adjust"},
-                    {label: "POST & CORE", value: "POST & CORE", icon:"fa-arrow-down"},
-                    {label: "POST & CORE + CROWN/ABUTMENT", value: "POST & CORE + CROWN/ABUTMENT", icon:"fa-arrow-circle-o-down"},
-                    {label: "INLAY/ONLAY", value: "INLAY/ONLAY", icon:"fa-caret-square-o-down"},
-                    {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
-                ];
+                return markingTypes;
             }
         }
     },
