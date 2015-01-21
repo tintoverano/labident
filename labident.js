@@ -1,10 +1,9 @@
 if (Meteor.isClient) {
   Meteor.startup (function () {
+    Session.set ("activeJob", 0);
   });
 
   Meteor.subscribe ("jobs");
-
-  Session.set ("activeJob", 0);
 
   theJob = {};
   teethTopLeft = [];
@@ -28,32 +27,29 @@ if (Meteor.isClient) {
     }
   });
 
-/*  Template.jobs.created = function () {
-    this.teethTopLeftList = [18, 17, 16, 15, 14, 13, 12, 11];
-    this.teethTopRightList = [21, 22, 23, 24, 25, 26, 27, 28];
-    this.teethBottomLeftList =  [48, 47, 46, 45, 44, 43, 42, 41];
-    this.teethBottomRightList = [31, 32, 33, 34, 35, 36, 37, 38];
-  };
-*/
   Template.jobs.helpers ({
 
     jobs: function () {
-      var items = Jobs.find ({}, {sort: {dueDate: 1}}).map (function (doc, index) {
-        return _.extend (doc, {index: index});
+      var items = Jobs.find({}, {sort: {dueDate: 1}}).map(function (doc, index) {
+        var anIndex = index;
+        return _.extend(doc, {index: index});
       });
-      var firstJob = Jobs.findOne ({}, {sort: {dueDate: 1}});
-      if (firstJob)
-        Session.set ("job_id", firstJob._id);
-      else
-        console.log ("no firstJob");
+      if (items[0] && Session.get ("job_id") == undefined) {
+        Session.set("job_id", items[0]._id);
+        console.log ("jobs template init: " + Session.get ("job_id"));
+      }
       return items;
     },
 
     job: function () {
+      console.log ("session job _id: " + Session.get ("job_id"));
       theJob = Jobs.findOne (Session.get ("job_id"));
-
-      if (theJob)
+      // az aktív indexűt kiválasztani
+      if (theJob == undefined)
         console.log ("no Job @ job: function ()");
+      else
+        console.log (theJob._id);
+      console.log ("job (template): " + Session.get ("activeJob"));
       return theJob;
     },
 
@@ -82,9 +78,9 @@ if (Meteor.isClient) {
     },
 
     checkImplantTopLeft: function (aTooth) {
-      console.log ("checkImplantTopLeft");
+      //console.log ("checkImplantTopLeft");
       if (theJob != null) {
-        console.log (theJob._id);
+        //console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
           var dia = "";
@@ -112,7 +108,7 @@ if (Meteor.isClient) {
     },
 
     getDiameterTopLeft: function (aTooth) {
-      console.log ("getDiameterTopLeft" + " " + aTooth);
+      //console.log ("getDiameterTopLeft" + " " + aTooth);
       if (_.size (teethTopLeft) > 0) {
         var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
         if (toothDoc)
@@ -122,7 +118,7 @@ if (Meteor.isClient) {
     },
 
     getImplantNameTopLeft: function (aTooth) {
-      console.log ("getImplantNameTopLeft" + " " + aTooth);
+      //console.log ("getImplantNameTopLeft" + " " + aTooth);
       if (_.size (teethTopLeft) > 0) {
         var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
         if (toothDoc)
@@ -132,7 +128,7 @@ if (Meteor.isClient) {
     },
 
     checkImplantIconTopLeft: function (aTooth) {
-      console.log ("checkImplantIconTopLeft" + " " + aTooth);
+      //console.log ("checkImplantIconTopLeft" + " " + aTooth);
       if (_.size (teethTopLeft) > 0) {
           var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
           if (toothDoc)
@@ -142,7 +138,7 @@ if (Meteor.isClient) {
     },
 
     checkImplantBottomLeft: function (aTooth) {
-      console.log ("checkImplantBottomLeft");
+      //console.log ("checkImplantBottomLeft");
       if (_.size (teethBottomLeft) > 0)
         if (_.findWhere(teethBottomLeft, {"tooth": aTooth}))
           return true;
@@ -150,7 +146,7 @@ if (Meteor.isClient) {
     },
 
     getDiameterBottomLeft: function (aTooth) {
-      console.log ("getDiameterBottomLeft" + " " + aTooth);
+      //console.log ("getDiameterBottomLeft" + " " + aTooth);
       if (_.size (teethBottomLeft) > 0) {
         var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
         if (toothDoc)
@@ -160,7 +156,7 @@ if (Meteor.isClient) {
     },
 
     getImplantNameBottomLeft: function (aTooth) {
-      console.log ("getImplantNameBottomLeft" + " " + aTooth);
+      //console.log ("getImplantNameBottomLeft" + " " + aTooth);
       if (_.size (teethBottomLeft) > 0) {
         var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
         if (toothDoc)
@@ -170,9 +166,9 @@ if (Meteor.isClient) {
     },
 
     checkImplantIconBottomLeft: function (aTooth) {
-      console.log ("checkImplantIconBottomLeft" + " " + aTooth);
+      //console.log ("checkImplantIconBottomLeft" + " " + aTooth);
       if (theJob != null) {
-        console.log (theJob._id);
+        //console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
           var dia = "";
@@ -203,9 +199,9 @@ if (Meteor.isClient) {
     },
 
     checkImplantTopRight: function (aTooth) {
-      console.log ("checkImplantTopRight");
+      //console.log ("checkImplantTopRight");
       if (theJob != null) {
-        console.log (theJob._id);
+        //console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
           var dia = "";
@@ -233,7 +229,7 @@ if (Meteor.isClient) {
     },
 
     getDiameterTopRight: function (aTooth) {
-      console.log ("getDiameterTopRight" + " " + aTooth);
+      //console.log ("getDiameterTopRight" + " " + aTooth);
       if (_.size (teethTopRight) > 0) {
         var toothDoc = _.findWhere (teethTopRight , {"tooth": aTooth});
         if (toothDoc)
@@ -243,7 +239,7 @@ if (Meteor.isClient) {
     },
 
     getImplantNameTopRight: function (aTooth) {
-      console.log ("getImplantNameTopRight" + " " + aTooth);
+      //console.log ("getImplantNameTopRight" + " " + aTooth);
       if (_.size (teethTopRight) > 0) {
         var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
         if (toothDoc)
@@ -253,7 +249,7 @@ if (Meteor.isClient) {
     },
 
     checkImplantIconTopRight: function (aTooth) {
-      console.log ("checkImplantIconTopRight" + " " + aTooth);
+      //console.log ("checkImplantIconTopRight" + " " + aTooth);
       if (_.size (teethTopRight) > 0) {
         var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
         if (toothDoc)
@@ -263,7 +259,7 @@ if (Meteor.isClient) {
     },
 
     checkImplantBottomRight: function (aTooth) {
-      console.log ("checkImplantBottomRight");
+      //console.log ("checkImplantBottomRight");
       if (_.size (teethBottomRight) > 0)
         if (_.findWhere (teethBottomRight , {"tooth": aTooth}))
           return true;
@@ -271,7 +267,7 @@ if (Meteor.isClient) {
     },
 
     getDiameterBottomRight: function (aTooth) {
-      console.log ("getDiameterBottomRight" + " " + aTooth);
+      //console.log ("getDiameterBottomRight" + " " + aTooth);
       if (_.size (teethBottomRight) > 0) {
         var toothDoc = _.findWhere (teethBottomRight , {"tooth": aTooth});
         if (toothDoc)
@@ -281,7 +277,7 @@ if (Meteor.isClient) {
     },
 
     getImplantNameBottomRight: function (aTooth) {
-      console.log ("getImplantNameBottomRight" + " " + aTooth);
+      //console.log ("getImplantNameBottomRight" + " " + aTooth);
       if (_.size (teethBottomRight) > 0) {
         var toothDoc = _.findWhere(teethBottomRight, {"tooth": aTooth});
         if (toothDoc)
@@ -291,9 +287,9 @@ if (Meteor.isClient) {
     },
 
     checkImplantIconBottomRight: function (aTooth) {
-      console.log ("checkImplantIconBottomRight" + " " + aTooth);
+      //console.log ("checkImplantIconBottomRight" + " " + aTooth);
       if (theJob != null) {
-        console.log (theJob._id);
+        //console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
           var dia = "";
@@ -329,6 +325,8 @@ if (Meteor.isClient) {
       var clickedJob = this.index;
       if (Session.get ("activeJob") != clickedJob) {
         Session.set ("activeJob", clickedJob);
+        console.log ("before click job : " + Session.get ("job_id"));
+        console.log ("after click job : " + this._id);
         Session.set ("job_id", this._id);
         teethTopLeft = [];
         teethBottomLeft = [];
