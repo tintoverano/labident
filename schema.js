@@ -81,8 +81,42 @@ markingTypes = [
     {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
 ];
 
-teeth = [
-  {label: "", valuse}
+teethList = [
+  {label: "18", value: 18},
+  {label: "17", value: 17},
+  {label: "16", value: 16},
+  {label: "15", value: 15},
+  {label: "14", value: 14},
+  {label: "13", value: 13},
+  {label: "12", value: 12},
+  {label: "11", value: 11},
+
+  {label: "21", value: 21},
+  {label: "22", value: 22},
+  {label: "23", value: 23},
+  {label: "24", value: 24},
+  {label: "25", value: 25},
+  {label: "26", value: 26},
+  {label: "27", value: 27},
+  {label: "28", value: 28},
+
+  {label: "48", value: 48},
+  {label: "47", value: 47},
+  {label: "46", value: 46},
+  {label: "45", value: 45},
+  {label: "44", value: 44},
+  {label: "43", value: 43},
+  {label: "42", value: 42},
+  {label: "41", value: 41},
+
+  {label: "31", value: 31},
+  {label: "32", value: 32},
+  {label: "33", value: 33},
+  {label: "34", value: 34},
+  {label: "35", value: 35},
+  {label: "36", value: 36},
+  {label: "37", value: 37},
+  {label: "38", value: 38}
 ];
 
 Jobs = new Mongo.Collection ("jobs");
@@ -177,7 +211,7 @@ Jobs.attachSchema (new SimpleSchema ({
             options: function () {
                 return [
                     {label: "None", value: "None"},
-                    {label: "1 year", value: "1 year"},
+                    {label: "4 year", value: "1 year"},
                     {label: "2 years", value: "2 years"},
                     {label: "3 years", value: "3 years"},
                     {label: "4 years", value: "4 years"},
@@ -518,8 +552,12 @@ Jobs.attachSchema (new SimpleSchema ({
     'patient.teeth.$.tooth': {
         type: Number,
         optional: true,
-        min: 11,
-        max: 48
+        autoform: {
+          type: "select-radio-inline",
+          options: function () {
+            return teethList;
+          }
+        }
     },
     'patient.teeth.$.implantPlatform': {
         type: String,
@@ -535,7 +573,7 @@ Jobs.attachSchema (new SimpleSchema ({
         type: String,
         optional: true,
         autoform: {
-            type: "select2",
+            type: "select-radio",
             options: function () {
                 return markingTypes;
             }
