@@ -11,10 +11,10 @@ Router.route('new', function () {
 });
 
 Router.onBeforeAction (function () {
-        if (!Meteor.userId()) {
-            this.render('askLogin');
-        } else {
-            this.next();
-        }},
+    if (!Meteor.userId()) {
+        this.render('askLogin');
+    } else {
+        this.next();
+    }},
     {only: ['new']}
 );

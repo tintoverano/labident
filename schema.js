@@ -81,6 +81,10 @@ markingTypes = [
     {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
 ];
 
+teeth = [
+  {label: "", valuse}
+];
+
 Jobs = new Mongo.Collection ("jobs");
 
 Jobs.attachSchema (new SimpleSchema ({

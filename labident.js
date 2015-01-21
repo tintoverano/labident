@@ -1,11 +1,8 @@
 if (Meteor.isClient) {
   Meteor.startup (function () {
-    //Meteor.call ('initJobNumber', function (error, results) {
-      //console.log (results); //results.data should be a JSON object
-    //});
   });
 
-  Meteor.subscribe("jobs");
+  Meteor.subscribe ("jobs");
 
   Session.set ("activeJob", 0);
 
@@ -54,6 +51,7 @@ if (Meteor.isClient) {
 
     job: function () {
       theJob = Jobs.findOne (Session.get ("job_id"));
+
       if (theJob)
         console.log ("no Job @ job: function ()");
       return theJob;
@@ -89,18 +87,21 @@ if (Meteor.isClient) {
         console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
+          var dia = "";
           var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (!implant)
-            return false;
+          if (implant)
+            dia = implant.dia;
+
+          var icon = "fa-square-o";
           var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (!marking)
-            return false;
+          if (marking)
+            icon = marking.icon;
 
           var toothData = {};
           toothData["tooth"] = aTooth;
-          toothData["dia"] = implant.dia;
+          toothData["dia"] = dia;
           toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = marking.icon;
+          toothData["marking"] = icon;
 
           teethTopLeft.push(toothData);
 
@@ -174,18 +175,21 @@ if (Meteor.isClient) {
         console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
-          var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
-          if (!implant)
-              return false;
-          var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
-          if (!marking)
-              return false;
+          var dia = "";
+          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+          if (implant)
+            dia = implant.dia;
+
+          var icon = "fa-square-o";
+          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+          if (marking)
+            icon = marking.icon;
 
           var toothData = {};
           toothData["tooth"] = aTooth;
-          toothData["dia"] = implant.dia;
+          toothData["dia"] = dia;
           toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = marking.icon;
+          toothData["marking"] = icon;
 
           teethBottomLeft.push(toothData);
         }
@@ -204,18 +208,21 @@ if (Meteor.isClient) {
         console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
+          var dia = "";
           var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (!implant)
-            return false;
+          if (implant)
+            dia = implant.dia;
+
+          var icon = "fa-square-o";
           var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (!marking)
-            return false;
+          if (marking)
+            icon = marking.icon;
 
           var toothData = {};
           toothData["tooth"] = aTooth;
-          toothData["dia"] = implant.dia;
+          toothData["dia"] = dia;
           toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = marking.icon;
+          toothData["marking"] = icon;
 
           teethTopRight.push(toothData);
 
@@ -289,18 +296,21 @@ if (Meteor.isClient) {
         console.log (theJob._id);
         var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
         if (toothDoc) {
+          var dia = "";
           var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (!implant)
-            return false;
+          if (implant)
+            dia = implant.dia;
+
+          var icon = "fa-square-o";
           var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (!marking)
-            return false;
+          if (marking)
+            icon = marking.icon;
 
           var toothData = {};
           toothData["tooth"] = aTooth;
-          toothData["dia"] = implant.dia;
+          toothData["dia"] = dia;
           toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = marking.icon;
+          toothData["marking"] = icon;
 
           teethBottomRight.push(toothData);
         }
@@ -339,8 +349,5 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods ({
-    //initJobNumber: function () {
-      //return setCounter ("labidentJob", 100);
-    //}
   });
 }
