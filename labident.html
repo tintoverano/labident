@@ -120,7 +120,7 @@
                             <a id="jobListItem" class="list-group-item {{#if notActive this.index}}active{{/if}}" href="">
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">job number #{{this.index}}</h4>
+                                        <h4 class="list-group-item-heading">{{this.jobNumber}}</h4>
                                         <p class="list-group-item-text">{{dentist.name}}</p>
                                     </div>
                                     <div class="col-sm-7">
@@ -141,7 +141,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
-                        <h2 class="pull-left" style="margin-top: -3px">{{this._id}}</h2>
+                        <h2 class="pull-left" style="margin-top: -3px">{{this.jobNumber}}</h2>
                         <a class="btn pull-right faMore" href="">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
