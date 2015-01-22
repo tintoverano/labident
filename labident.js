@@ -4,6 +4,26 @@ Number.prototype.pad = function (size) {
   return s;
 };
 
+Images = new FS.Collection("patientImages", {stores: [new FS.Store.FileSystem("patientImages", {path: "~/uploads"})]});
+
+Images.allow ({
+  insert: function (userId, doc) {
+    // the user must be logged in, and the document must be owned by the user
+    //return (userId && doc.owner === userId);
+    return true;
+  },
+  update: function (userId, doc, fields, modifier) {
+    // can only change your own documents
+    //return doc.owner === userId;
+    return true;
+  },
+  remove: function (userId, doc) {
+    // can only remove your own documents
+    //return doc.owner === userId;
+    return false;
+  }
+});
+
 if (Meteor.isClient) {
   Meteor.startup (function () {
     Session.set ("activeJob", 0);
@@ -12,6 +32,7 @@ if (Meteor.isClient) {
   });
 
   Meteor.subscribe ("jobs");
+  Meteor.subscribe ("patientImages");
 
   theJob = {};
   teethTopLeft = [];
@@ -379,6 +400,10 @@ if (Meteor.isServer) {
   Meteor.publish ("jobs", function () {
     Counts.publish (this, 'totalJobs', Jobs.find (), {noReady: true});
     return (Jobs.find ());
+  });
+
+  Meteor.publish ("patientImages", function () {
+    return (Images.find ());
   });
 
   Meteor.methods ({

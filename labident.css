@@ -43,6 +43,10 @@ i.magnifier {
     left: 6px;
 }
 
+a .fa-times {
+    margin-right: 10px;
+}
+
 .form-control {
     padding-left: 22px;
 }

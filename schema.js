@@ -287,7 +287,8 @@ jobSchema = new SimpleSchema ({
         type: String,
         autoform: {
             afFieldInput: {
-                type: "file"
+              type: 'fileUpload',
+              collection: 'Images'
             }
         }
     },

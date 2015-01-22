@@ -26,3 +26,6 @@ momentjs:moment
 underscore
 fortawesome:fontawesome
 tmeasday:publish-counts
+yogiben:autoform-file
+cfs:standard-packages
+cfs:filesystem
