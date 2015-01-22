@@ -346,6 +346,14 @@ if (Meteor.isClient) {
           return theTooth.marking;
       }
       return "fa-square-o";
+    },
+
+    getImageUrl: function (pictId) {
+      return Images.findOne (pictId).url ();
+    },
+
+    getImageName: function (pictId) {
+      return Images.findOne (pictId).name ();
     }
   });
 

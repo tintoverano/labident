@@ -225,8 +225,10 @@
                         <div class="list-group-item">
                             <div class="row">
                                 {{#each patient.images}}
-                                    <div class="col-sm-1 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{name}}">
-                                        <i class="fa fa-image fa-2x"></i>
+                                    <div class="col-sm-3 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getImageName name}}">
+                                        <a href="{{getImageUrl name}}" target="_blank">
+                                            <img src="{{getImageUrl name}}" width="160px">
+                                        </a>
                                     </div>
                                 {{/each}}
                             </div>
