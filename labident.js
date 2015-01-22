@@ -377,7 +377,8 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish ("jobs", function () {
-    return Jobs.find ();
+    Counts.publish (this, 'totalJobs', Jobs.find (), {noReady: true});
+    return (Jobs.find ());
   });
 
   Meteor.methods ({
