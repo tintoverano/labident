@@ -237,8 +237,10 @@
                         <div class="list-group-item">
                             <div class="row">
                                 {{#each patient.files}}
-                                    <div class="col-sm-1 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{name}}">
-                                        <i class="fa fa-file fa-2x"></i>
+                                    <div class="col-sm-1 simptip-position-top simptip-warning simptip-smooth simptip-fade" data-tooltip="{{getFileName name}}">
+                                        <a href="{{getFileUrl name}}" target="_blank">
+                                            <i class="fa fa-file fa-2x"></i>
+                                        </a>
                                     </div>
                                 {{/each}}
                             </div>

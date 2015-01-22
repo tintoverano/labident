@@ -4,7 +4,26 @@ Number.prototype.pad = function (size) {
   return s;
 };
 
-Images = new FS.Collection("patientImages", {stores: [new FS.Store.FileSystem("patientImages", {path: "~/uploads"})]});
+Images = new FS.Collection ("patientImages", {
+  stores: [new FS.Store.FileSystem ("patientImages", {path: "~/uploads"})],
+  //stores: [new FS.Store.FileSystem ("patientImages")],
+  filter: {
+    allow: {
+      contentTypes: ['image/*']
+    }
+  }
+});
+
+
+Files = new FS.Collection ("patientFiles", {
+  stores: [new FS.Store.FileSystem ("patientFiles", {path: "~/uploads"})],
+  //stores: [new FS.Store.FileSystem ("patientFiles")],
+  filter: {
+    deny: {
+      contentTypes: ['image/*']
+    }
+  }
+});
 
 Images.allow ({
   insert: function (userId, doc) {
@@ -33,6 +52,7 @@ if (Meteor.isClient) {
 
   Meteor.subscribe ("jobs");
   Meteor.subscribe ("patientImages");
+  Meteor.subscribe ("patientFiles");
 
   theJob = {};
   teethTopLeft = [];
@@ -354,6 +374,14 @@ if (Meteor.isClient) {
 
     getImageName: function (pictId) {
       return Images.findOne (pictId).name ();
+    },
+
+    getFileUrl: function (fileId) {
+      return Files.findOne (fileId).url ();
+    },
+
+    getFileName: function (fileId) {
+      return Files.findOne (fileId).name ();
     }
   });
 
@@ -412,6 +440,10 @@ if (Meteor.isServer) {
 
   Meteor.publish ("patientImages", function () {
     return (Images.find ());
+  });
+
+  Meteor.publish ("patientFiles", function () {
+    return (Files.find ());
   });
 
   Meteor.methods ({
