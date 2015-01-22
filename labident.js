@@ -1,6 +1,14 @@
+Number.prototype.pad = function (size) {
+  var s = String (this);
+  while (s.length < (size || 2)) {s = "0" + s;}
+  return s;
+};
+
 if (Meteor.isClient) {
   Meteor.startup (function () {
     Session.set ("activeJob", 0);
+    //AutoForm.debug ();
+    //SimpleSchema.debug = true;
   });
 
   Meteor.subscribe ("jobs");
@@ -332,6 +340,32 @@ if (Meteor.isClient) {
         teethBottomLeft = [];
         teethTopRight = [];
         teethBottomRight = [];
+      }
+    }
+  });
+
+  AutoForm.hooks ({
+    newJob: {
+      before: {
+        insert: function (doc, template) {
+          //return doc; (synchronous)
+          //return false; (synchronous, cancel)
+          //this.result(doc); (asynchronous)
+          //this.result(false); (asynchronous, cancel)
+          var today = new Date ();
+          var nextJobNumber = 1;
+          var myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + nextJobNumber.pad(3);
+          var aJob;
+          while (aJob = Jobs.findOne ({jobNumber: myJobNumber}, {jobNumber: 1})) {
+            myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + (++nextJobNumber).pad(3);
+          };
+          doc.jobNumber = myJobNumber;
+          return this.result (doc);
+        }
+      },
+
+      onSuccess: function (operation, result, template) {
+        Router.go("/");
       }
     }
   });

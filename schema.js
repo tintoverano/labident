@@ -121,12 +121,12 @@ teethList = [
 
 Jobs = new Mongo.Collection ("jobs");
 
-Jobs.attachSchema (new SimpleSchema ({
+jobSchema = new SimpleSchema ({
     jobNumber: {
         type: String,
-        defaultValue: "111",
+        defaultValue: "will be assigned after save",
         autoform: {
-          omit: true
+          readonly: true
         }
     },
     createdAt: {
@@ -610,4 +610,33 @@ Jobs.attachSchema (new SimpleSchema ({
         type: String,
         max: 20
     }
-}));
+});
+
+Jobs.attachSchema (jobSchema);
+/*
+Template.newJob.jobSchema = function () {
+  newJobForm = new AutoForm (jobSchema);
+
+  newJobForm.callbacks ({
+    insert: function (error, result) {
+      if (error) {
+        console.log("Insert Error:", error);
+      } else {
+        alert("Inserted!");
+        console.log("Insert Result:", result);
+      }
+    },
+    update: function(error) {
+      if (error) {
+        console.log("Update Error:", error);
+      } else {
+        alert("Updated!");
+      }
+    },
+    remove: function(error) {
+      console.log("Remove Error:", error);
+    }
+  });
+  return newJobForm;
+};
+*/
