@@ -39,6 +39,53 @@ Router.route ('editJobDetails', {
   }
 });
 
+Router.route ('editPatient', {
+  loadingTemplate: 'loadingJobs',
+
+  waitOn: function () {
+    return Meteor.subscribe ("jobs");
+  },
+
+  data: function () {
+    return Jobs.findOne ({_id: Session.get ("job_id")}, {patient: 1});
+  },
+
+  action: function () {
+    this.render('editPatient');
+  }
+});
+
+Router.route ('editThirdParties', {
+  loadingTemplate: 'loadingJobs',
+
+  waitOn: function () {
+    return Meteor.subscribe ("jobs");
+  },
+
+  data: function () {
+    return Jobs.findOne ({_id: Session.get ("job_id")}, {thirdParties: 1});
+  },
+
+  action: function () {
+    this.render('editThirdParties');
+  }
+});
+
+Router.route ('editDentist', {
+  loadingTemplate: 'loadingJobs',
+
+  waitOn: function () {
+    return Meteor.subscribe ("jobs");
+  },
+
+  data: function () {
+    return Jobs.findOne ({_id: Session.get ("job_id")}, {dentist: 1});
+  },
+
+  action: function () {
+    this.render('editDentist');
+  }
+});
 
 Router.onBeforeAction (function () {
     if (!Meteor.userId ()) {

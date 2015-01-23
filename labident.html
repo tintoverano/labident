@@ -61,6 +61,57 @@
     </div>
 </template>
 
+<template name="editPatient">
+    {{> nav}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> quickForm id="editPatient" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update Patient"
+                        fields="patient"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="editThirdParties">
+    {{> nav}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> quickForm id="editThirdParties" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update 3rd Parties"
+                        fields="thirdParties"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="editDentist">
+    {{> nav}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> quickForm id="editDentist" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update Dentist"
+                        fields="dentist"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <template name="nav">
     <nav class="navbar navbar-default navbar-fixed-top" style="background-color: white;">
         <div class="container">
@@ -175,7 +226,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
                         <h2 class="pull-left" style="margin-top: -3px">{{this.jobNumber}}</h2>
-                        <a class="btn pull-right faMore simptip-position-right simptip-smooth simptip-fade" data-tooltip="Edit Job" href="editJobDetails">
+                        <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit Job Details" href="editJobDetails">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                         <a class="btn pull-right faMore" href="">
@@ -233,7 +284,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-user pull-left"></i>
                         <h3 class="pull-left" style="margin-top: 1px">Patient</h3>
-                        <a class="btn pull-right faMore" href="">
+                        <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit Patient" href="editPatient">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                     </div>
@@ -811,7 +862,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-users pull-left"></i>
                         <h3 class="pull-left" style="margin-top: 1px">3rd Parties</h3>
-                        <a class="btn pull-right faMore" href="">
+                        <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit 3rd Parties" href="editThirdParties">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                     </div>
@@ -837,7 +888,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-user-md pull-left"></i>
                         <h3 class="pull-left" style="margin-top: 1px">Dentist</h3>
-                        <a class="btn pull-right faMore" href="">
+                        <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit Dentist" href="editDentist">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                     </div>
