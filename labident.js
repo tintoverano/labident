@@ -419,6 +419,12 @@ if (Meteor.isClient) {
       onSuccess: function (operation, result, template) {
         Router.go("/");
       }
+    },
+
+    editJobDetails: {
+      onSuccess: function (operation, result, template) {
+        Router.go("/");
+      }
     }
   });
 }

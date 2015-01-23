@@ -52,7 +52,8 @@
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        {{> quickForm id="editJobDetails" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update Job"}}
+                        {{> quickForm id="editJobDetails" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update Job"
+                        fields="arrivalDate,dueDate,status,invoiceNumber,shipping,warranty,memo"}}
                     </div>
                 </div>
             </div>

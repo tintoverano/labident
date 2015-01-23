@@ -31,7 +31,7 @@ Router.route ('editJobDetails', {
   },
 
   data: function () {
-    return Jobs.findOne ({_id: Session.get ("job_id")});
+    return Jobs.findOne ({_id: Session.get ("job_id")}, {arrivalDate: 1, dueDate: 1, status: 1, invoiceNumber: 1, shipping: 1, warranty: 1, memo: 1});
   },
 
   action: function () {
@@ -41,7 +41,7 @@ Router.route ('editJobDetails', {
 
 
 Router.onBeforeAction (function () {
-    if (!Meteor.userId()) {
+    if (!Meteor.userId ()) {
         this.render('askLogin');
     } else {
         this.next();
