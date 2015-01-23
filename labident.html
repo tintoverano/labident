@@ -16,6 +16,16 @@
     {{> jobs}}
 </template>
 
+<template name="loadingJobs">
+    {{> nav}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <h3>loading job(s) ...</h3>
+        </div>
+    </div>
+</template>
+
 <template name="newJob">
     {{> nav}}
     {{> weekStripe}}
@@ -26,6 +36,23 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         {{> quickForm id="newJob" collection="Jobs" type="insert" validation="keyup" buttonContent="Save New Job"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="editJobDetails">
+    {{> nav}}
+    {{> weekStripe}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{> quickForm id="editJobDetails" collection="Jobs" doc=this type="update" validation="keyup" buttonContent="Update Job"}}
                     </div>
                 </div>
             </div>
@@ -69,7 +96,12 @@
 
 <template name="askLogin">
     {{> nav}}
-    <h2>please login</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3"></div>
+           <h3>please login first ...</h3>
+        </div>
+    </div>
 </template>
 
 <template name="weekStripe">
@@ -142,7 +174,7 @@
                     <div class="panel-heading clearfix">
                         <i class="fa fa-2x fa-cog pull-left"></i>
                         <h2 class="pull-left" style="margin-top: -3px">{{this.jobNumber}}</h2>
-                        <a class="btn pull-right faMore" href="">
+                        <a class="btn pull-right faMore simptip-position-right simptip-smooth simptip-fade" data-tooltip="Edit Job" href="editJobDetails">
                             <i class="fa fa-pencil fa-2x"></i>
                         </a>
                         <a class="btn pull-right faMore" href="">

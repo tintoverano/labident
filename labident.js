@@ -50,10 +50,6 @@ if (Meteor.isClient) {
     //SimpleSchema.debug = true;
   });
 
-  Meteor.subscribe ("jobs");
-  Meteor.subscribe ("patientImages");
-  Meteor.subscribe ("patientFiles");
-
   theJob = {};
   teethTopLeft = [];
   teethBottomLeft = [];
@@ -85,20 +81,19 @@ if (Meteor.isClient) {
       });
       if (items[0] && Session.get ("job_id") == undefined) {
         Session.set("job_id", items[0]._id);
-        console.log ("jobs template init: " + Session.get ("job_id"));
+        //console.log ("jobs template init: " + Session.get ("job_id"));
       }
       return items;
     },
 
     job: function () {
-      console.log ("session job _id: " + Session.get ("job_id"));
+      //console.log ("session job _id: " + Session.get ("job_id"));
       theJob = Jobs.findOne (Session.get ("job_id"));
-      // az aktív indexűt kiválasztani
-      if (theJob == undefined)
+      /*if (theJob == undefined)
         console.log ("no Job @ job: function ()");
       else
         console.log (theJob._id);
-      console.log ("job (template): " + Session.get ("activeJob"));
+      console.log ("job (template): " + Session.get ("activeJob"));*/
       return theJob;
     },
 
@@ -390,8 +385,8 @@ if (Meteor.isClient) {
       var clickedJob = this.index;
       if (Session.get ("activeJob") != clickedJob) {
         Session.set ("activeJob", clickedJob);
-        console.log ("before click job : " + Session.get ("job_id"));
-        console.log ("after click job : " + this._id);
+        //console.log ("before click job : " + Session.get ("job_id"));
+        //console.log ("after click job : " + this._id);
         Session.set ("job_id", this._id);
         teethTopLeft = [];
         teethBottomLeft = [];
