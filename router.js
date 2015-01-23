@@ -27,7 +27,11 @@ Router.route ('editJobDetails', {
   loadingTemplate: 'loadingJobs',
 
   waitOn: function () {
-    return Meteor.subscribe ("jobs");
+    return [
+      Meteor.subscribe ("jobs"),
+      Meteor.subscribe ("patientImages"),
+      Meteor.subscribe ("patientFiles")
+    ];
   },
 
   data: function () {
@@ -43,7 +47,11 @@ Router.route ('editPatient', {
   loadingTemplate: 'loadingJobs',
 
   waitOn: function () {
-    return Meteor.subscribe ("jobs");
+    return [
+      Meteor.subscribe ("jobs"),
+      Meteor.subscribe ("patientImages"),
+      Meteor.subscribe ("patientFiles")
+    ];
   },
 
   data: function () {
@@ -59,7 +67,11 @@ Router.route ('editThirdParties', {
   loadingTemplate: 'loadingJobs',
 
   waitOn: function () {
-    return Meteor.subscribe ("jobs");
+    return [
+      Meteor.subscribe ("jobs"),
+      Meteor.subscribe ("patientImages"),
+      Meteor.subscribe ("patientFiles")
+    ];
   },
 
   data: function () {
@@ -75,7 +87,11 @@ Router.route ('editDentist', {
   loadingTemplate: 'loadingJobs',
 
   waitOn: function () {
-    return Meteor.subscribe ("jobs");
+    return [
+      Meteor.subscribe ("jobs"),
+      Meteor.subscribe ("patientImages"),
+      Meteor.subscribe ("patientFiles")
+    ];
   },
 
   data: function () {
