@@ -186,7 +186,7 @@
                             <div class="col-sm-1"></div>
                             <div class="col-sm-7">
                                 <div class="form-group" style="position:relative; top: 18px">
-                                    <input type="text" class="form-control" placeholder="Search Jobs...">
+                                    <input id="searchBox" type="text" class="form-control" placeholder="Type to search jobs...">
                                     <i class="fa fa-search magnifier"></i>
                                 </div>
                             </div>
@@ -204,12 +204,12 @@
                             <a id="jobListItem" class="list-group-item {{#if notActive this.index}}active{{/if}}" href="">
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <h4 class="list-group-item-heading">{{this.jobNumber}}</h4>
-                                        <p class="list-group-item-text">{{dentist.name}}</p>
+                                        <h4 class="list-group-item-heading">{{{this.jobNumber}}}</h4>
+                                        <p class="list-group-item-text">{{{dentist.name}}}</p>
                                     </div>
                                     <div class="col-sm-7">
                                         <p class="list-group-item-text" style="padding-bottom: 6px">{{simpleDate arrivalDate}}</p>
-                                        <p class="list-group-item-text">{{patient.name}}</p>
+                                        <p class="list-group-item-text">{{{patient.name}}}</p>
                                     </div>
                                 </div>
                             </a>

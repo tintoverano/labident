@@ -73,6 +73,13 @@ if (Meteor.isClient) {
   teethTopRight = [];
   teethBottomRight = [];
 
+  var searchOptions = {
+    keepHistory: 1000 * 60,
+    localSearch: true
+  };
+  var searchFields = ['jobNumber', 'dentist.name', 'patient.name'];
+  JobSearch = new SearchSource ('jobs', searchFields, searchOptions);
+
   Template.weekStripe.helpers ({
     options: function () {
       return {
@@ -89,17 +96,35 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.jobs.helpers ({
+  Template.jobs.rendered = function () {
+    JobSearch.search ('');
+  };
 
+  Template.jobs.helpers ({
     jobs: function () {
-      var items = Jobs.find({}, {sort: {dueDate: 1}}).map(function (doc, index) {
+      /*var items = Jobs.find ({}, {sort: {dueDate: 1}}).map (function (doc, index) {
         var anIndex = index;
-        return _.extend(doc, {index: index});
+        return _.extend (doc, {index: index});
+      });
+      if (items[0] && Session.get ("job_id") == undefined) {
+        Session.set("job_id", items[0]._id);
+        //console.log ("jobs template init: " + Session.get ("job_id"));
+      }*/
+      var items = JobSearch.getData ({
+        transform: function (matchText, regExp) {
+          return matchText.replace (regExp, "<b>$&</b>")
+        },
+        sort: {dueDate: 1}
+      });
+      items.map (function (doc, index) {
+        var anIndex = index;
+        return _.extend (doc, {index: index});
       });
       if (items[0] && Session.get ("job_id") == undefined) {
         Session.set("job_id", items[0]._id);
         //console.log ("jobs template init: " + Session.get ("job_id"));
       }
+      console.log (items);
       return items;
     },
 
@@ -398,6 +423,11 @@ if (Meteor.isClient) {
   });
 
   Template.jobs.events ({
+    "keyup #searchBox": _.throttle (function (e) {
+      var text = $(e.target).val ().trim ();
+      JobSearch.search (text);
+    }, 200),
+
     "click #jobListItem": function () {
       var clickedJob = this.index;
       if (Session.get ("activeJob") != clickedJob) {
@@ -465,8 +495,8 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  Meteor.startup (function () {
+    Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1});
   });
 
   Meteor.publish ("jobs", function () {
@@ -484,4 +514,25 @@ if (Meteor.isServer) {
 
   Meteor.methods ({
   });
+
+  SearchSource.defineSource ('jobs', function(searchText, options) {
+    var options = {sort: {isoScore: -1}, limit: 20};
+
+    if(searchText) {
+      var regExp = buildRegExp (searchText);
+      var selector = {$or: [
+        {jobNumber: regExp},
+        {"dentist.name": regExp},
+        {"patient.name": regExp}
+      ]};
+      return Jobs.find (selector, options).fetch ();
+    } else
+      return Jobs.find ({}, options).fetch ();
+  });
+
+  function buildRegExp(searchText) {
+    // this is a dumb implementation
+    var parts = searchText.trim().split(/[ \-\:]+/);
+    return new RegExp("(" + parts.join('|') + ")", "ig");
+  }
 }
