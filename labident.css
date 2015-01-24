@@ -6,7 +6,7 @@
     width: 22px;
 }
 
-.col-sm-12 {
+.col-sm-11 {
     width: 24px;
 }
 
@@ -17,10 +17,6 @@
 .implantSpan  {
     font-size: 15px;
     color: blue;
-}
-
-.navbar {
-    margin-bottom: 0;
 }
 
 .fc-toolbar h2 {
@@ -35,4 +31,34 @@
 .faMore {
     padding-right: 2px;
     padding-left: 2px;
+}
+
+.media-body {
+    display: inherit;
+}
+
+i.magnifier {
+    position: relative;
+    top: -27px;
+    left: 6px;
+}
+
+a .fa-times {
+    margin-right: 10px;
+}
+
+a .fa-file-o {
+    margin-right: 14px;
+}
+
+a .fa-file-pdf-o {
+    margin-right: 14px;
+}
+
+.form-control {
+    padding-left: 22px;
+}
+
+a.list-group-item .list-group-item-heading {
+    color: blue;
 }
