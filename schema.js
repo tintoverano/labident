@@ -66,35 +66,109 @@ implantTypes = [
     {label: "DENTSPLY FRIALIT / XiVe 5.5", value: "DENTSPLY FRIALIT / XiVe 5.5", id: 63, dia: "5.5"}
 ];
 
-Schemas = {};
+markingTypes = [
+    {label: "CROWN/ABUTMENT", value: "CROWN/ABUTMENT", icon:"fa-circle-o"},
+    {label: "IMPLANT CROWN/ABUTMENT", value: "IMPLANT CROWN/ABUTMENT", icon:"fa-dot-circle-o"},
+    {label: "IMPLANT ABUTMENT + CROWN", value: "IMPLANT ABUTMENT + CROWN", icon:"fa-bullseye"},
+    {label: "PONTIC", value: "PONTIC", icon:"fa-times"},
+    {label: "PRECISION ATTACHMENT", value: "PRECISION ATTACHMENT", icon:"fa-ils"},
+    {label: "DENTURE TOOTH", value: "DENTURE TOOTH", icon:"fa-times-circle"},
+    {label: "COMBINATION CASE", value: "COMBINATION CASE", icon:"fa-toggle-on"},
+    {label: "CANTILEVER PONTIC", value: "CANTILEVER PONTIC", icon:"fa-adjust"},
+    {label: "POST & CORE", value: "POST & CORE", icon:"fa-arrow-down"},
+    {label: "POST & CORE + CROWN/ABUTMENT", value: "POST & CORE + CROWN/ABUTMENT", icon:"fa-arrow-circle-o-down"},
+    {label: "INLAY/ONLAY", value: "INLAY/ONLAY", icon:"fa-caret-square-o-down"},
+    {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
+];
 
-Jobs = new Mongo.Collection("jobs");
+teethList = [
+  {label: "18", value: 18},
+  {label: "17", value: 17},
+  {label: "16", value: 16},
+  {label: "15", value: 15},
+  {label: "14", value: 14},
+  {label: "13", value: 13},
+  {label: "12", value: 12},
+  {label: "11", value: 11},
 
-Jobs.attachSchema (new SimpleSchema ({
-    jobDetails: {
-        type: Object
-    },
-    'jobDetails.arrivalDate': {
-        type: Date,
-        autoform: {
-            afFieldInput: {
-                type: "bootstrap-datetimepicker"
-            }
-        }
-    },
-    'jobDetails.dueDate': {
-        type: Date,
-        autoform: {
-            afFieldInput: {
-                type: "bootstrap-datetimepicker"
-            }
-        }
-    },
-    'jobDetails.status': {
+  {label: "21", value: 21},
+  {label: "22", value: 22},
+  {label: "23", value: 23},
+  {label: "24", value: 24},
+  {label: "25", value: 25},
+  {label: "26", value: 26},
+  {label: "27", value: 27},
+  {label: "28", value: 28},
+
+  {label: "48", value: 48},
+  {label: "47", value: 47},
+  {label: "46", value: 46},
+  {label: "45", value: 45},
+  {label: "44", value: 44},
+  {label: "43", value: 43},
+  {label: "42", value: 42},
+  {label: "41", value: 41},
+
+  {label: "31", value: 31},
+  {label: "32", value: 32},
+  {label: "33", value: 33},
+  {label: "34", value: 34},
+  {label: "35", value: 35},
+  {label: "36", value: 36},
+  {label: "37", value: 37},
+  {label: "38", value: 38}
+];
+
+Jobs = new Mongo.Collection ("jobs");
+
+jobSchema = new SimpleSchema ({
+    jobNumber: {
         type: String,
+        defaultValue: "will be assigned after save",
+        autoform: {
+          readonly: true
+        }
+    },
+    createdAt: {
+        type: Date,
+        defaultValue: new Date(),
+        autoform: {
+            omit: true
+        }
+    },
+/*    createdBy: {
+        type: String,
+        defaultValue: Meteor.userId (),
+        autoform: {
+            omit: true
+        }
+    },
+/*    jobDetails: {
+        type: Object
+    },*/
+    arrivalDate: {
+        type: Date,
+        defaultValue: new Date(),
+        autoform: {
+            afFieldInput: {
+                type: "bootstrap-datetimepicker"
+            }
+        }
+    },
+    dueDate: {
+        type: Date,
+        defaultValue: new Date(),
+        autoform: {
+            afFieldInput: {
+                type: "bootstrap-datetimepicker"
+            }
+        }
+    },
+    status: {
+        type: String,
+        defaultValue: "In progress",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "In progress",
             options: function () {
                 return [
                     {label: "In progress", value: "In progress"},
@@ -103,19 +177,19 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.invoiceNumber': {
+    invoiceNumber: {
         type: String,
         optional: true,
         max: 20
     },
-    'jobDetails.shipping': {
+    shipping: {
         type: Object
     },
-    'jobDetails.shipping.shipper': {
+    'shipping.shipper': {
         type: String,
+        defaultValue: "Labident",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "Labident",
             options: function () {
                 return [
                     {label: "Labident", value: "Labident"},
@@ -125,19 +199,19 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.shipping.trackingNumber': {
+    'shipping.trackingNumber': {
         type: String,
         optional: true
     },
-    'jobDetails.warranty': {
+    warranty: {
         type: String,
+        defaultValue: "2 years",
         autoform: {
             type: "select-radio-inline",
-            defaultValue: "2 years",
             options: function () {
                 return [
                     {label: "None", value: "None"},
-                    {label: "1 year", value: "1 year"},
+                    {label: "4 year", value: "1 year"},
                     {label: "2 years", value: "2 years"},
                     {label: "3 years", value: "3 years"},
                     {label: "4 years", value: "4 years"},
@@ -146,7 +220,7 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'jobDetails.memo': {
+    memo: {
         type: String,
         optional: true,
         autoform: {
@@ -207,10 +281,14 @@ Jobs.attachSchema (new SimpleSchema ({
         optional: true
     },
     'patient.images.$': {
+        type: Object
+    },
+    'patient.images.$.name': {
         type: String,
         autoform: {
             afFieldInput: {
-                type: "file"
+              type: 'fileUpload',
+              collection: 'Images'
             }
         }
     },
@@ -219,10 +297,14 @@ Jobs.attachSchema (new SimpleSchema ({
         optional: true
     },
     'patient.files.$': {
+        type: Object
+    },
+    'patient.files.$.name': {
         type: String,
         autoform: {
             afFieldInput: {
-                type: "file"
+              type: 'fileUpload',
+              collection: 'Files'
             }
         }
     },
@@ -393,7 +475,14 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
-    'patient.material':{
+    'patient.materialDetails': {
+      type: Array,
+      optional: true
+    },
+    'patient.materialDetails.$': {
+      type: Object
+    },
+    'patient.materialDetails.$.material':{
         type: String,
         optional: true,
         autoform: {
@@ -417,6 +506,42 @@ Jobs.attachSchema (new SimpleSchema ({
             }
         }
     },
+    'patient.materialDetails.$.alloy':{
+      type: String,
+      optional: true,
+      autoform: {
+        type: "select",
+        options: function () {
+          return [
+            {label: "Alloy 1", value: "Alloy 1"},
+            {label: "Alloy 2", value: "Alloy 2"},
+            {label: "Alloy 3", value: "Alloy 3"},
+            {label: "Alloy 4", value: "Alloy 4"}
+          ];
+        }
+      }
+    },
+    'patient.materialDetails.$.alloyAmount': {
+      type: String,
+      label: "Alloy amount (gr)",
+      optional: true,
+      max: 10
+    },
+    'patient.materialDetails.$.artNr': {
+        type: String,
+        optional: true,
+        max: 50
+    },
+    'patient.materialDetails.$.lotNr': {
+        type: String,
+        optional: true,
+        max: 50
+    },
+    'patient.materialDetails.$.refNr': {
+        type: String,
+        optional: true,
+        max: 50
+    },
     'patient.teeth': {
         type: Array,
         optional: true
@@ -429,8 +554,12 @@ Jobs.attachSchema (new SimpleSchema ({
     'patient.teeth.$.tooth': {
         type: Number,
         optional: true,
-        min: 1,
-        max: 50
+        autoform: {
+          type: "select-radio-inline",
+          options: function () {
+            return teethList;
+          }
+        }
     },
     'patient.teeth.$.implantPlatform': {
         type: String,
@@ -446,22 +575,9 @@ Jobs.attachSchema (new SimpleSchema ({
         type: String,
         optional: true,
         autoform: {
-            type: "select2",
+            type: "select-radio",
             options: function () {
-                return [
-                    {label: "CROWN/ABUTMENT", value: "CROWN/ABUTMENT", icon:"fa-circle-o"},
-                    {label: "IMPLANT CROWN/ABUTMENT", value: "IMPLANT CROWN/ABUTMENT", icon:"fa-dot-circle-o"},
-                    {label: "IMPLANT ABUTMENT + CROWN", value: "IMPLANT ABUTMENT + CROWN", icon:"fa-bullseye"},
-                    {label: "PONTIC", value: "PONTIC", icon:"fa-times"},
-                    {label: "PRECISION ATTACHMENT", value: "PRECISION ATTACHMENT", icon:"fa-ils"},
-                    {label: "DENTURE TOOTH", value: "DENTURE TOOTH", icon:"fa-times-circle"},
-                    {label: "COMBINATION CASE", value: "COMBINATION CASE", icon:"fa-toggle-on"},
-                    {label: "CANTILEVER PONTIC", value: "CANTILEVER PONTIC", icon:"fa-adjust"},
-                    {label: "POST & CORE", value: "POST & CORE", icon:"fa-arrow-down"},
-                    {label: "POST & CORE + CROWN/ABUTMENT", value: "POST & CORE + CROWN/ABUTMENT", icon:"fa-arrow-circle-o-down"},
-                    {label: "INLAY/ONLAY", value: "INLAY/ONLAY", icon:"fa-caret-square-o-down"},
-                    {label: "VENEER", value: "VENEER", icon:"fa-vimeo-square"}
-                ];
+                return markingTypes;
             }
         }
     },
@@ -496,4 +612,33 @@ Jobs.attachSchema (new SimpleSchema ({
         type: String,
         max: 20
     }
-}));
+});
+
+Jobs.attachSchema (jobSchema);
+/*
+Template.newJob.jobSchema = function () {
+  newJobForm = new AutoForm (jobSchema);
+
+  newJobForm.callbacks ({
+    insert: function (error, result) {
+      if (error) {
+        console.log("Insert Error:", error);
+      } else {
+        alert("Inserted!");
+        console.log("Insert Result:", result);
+      }
+    },
+    update: function(error) {
+      if (error) {
+        console.log("Update Error:", error);
+      } else {
+        alert("Updated!");
+      }
+    },
+    remove: function(error) {
+      console.log("Remove Error:", error);
+    }
+  });
+  return newJobForm;
+};
+*/
