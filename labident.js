@@ -60,7 +60,7 @@ Files.allow ({
 
 if (Meteor.isClient) {
   Meteor.startup (function () {
-    Session.set ("activeJob", 0);
+    //Session.set ("activeJob", 0);
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
   });
@@ -141,17 +141,21 @@ if (Meteor.isClient) {
         var anIndex = index;
         return _.extend (doc, {index: index});
       });
-      if (items[0] && Session.get ("job_id") == undefined) {
+      /*if (items[0] && Session.get ("job_id") == undefined) {
         Session.set("job_id", items[0]._id);
-        //console.log ("jobs template init: " + Session.get ("job_id"));
-      }
+        console.log ("jobs template init: " + Session.get ("job_id"));
+      }*/
       //console.log (items);
       return items;
     },
 
     job: function () {
       //console.log ("session job _id: " + Session.get ("job_id"));
-      theJob = Jobs.findOne (Session.get ("job_id"));
+      var jobId = Session.get ("job_id");
+      if (jobId != null)
+        theJob = Jobs.findOne (jobId);
+      else
+        theJob = null;
       /*if (theJob == undefined)
         console.log ("no Job @ job: function ()");
       else
@@ -172,6 +176,8 @@ if (Meteor.isClient) {
   Template.jobs.events ({
     "keyup #searchBox": _.throttle (function (e) {
       var text = $(e.target).val ().trim ();
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
       JobSearch.search (text);
     }, 200),
 
@@ -280,7 +286,7 @@ if (Meteor.isServer) {
       return Jobs.find ({}, options).fetch ();
   });
 
-  function buildRegExp(searchText) {
+  function buildRegExp (searchText) {
     var parts = searchText.trim ().split (/[ \-\:]+/);
     return new RegExp ("(" + parts.join ('|') + ")", "ig");
   }
