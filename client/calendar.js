@@ -2,35 +2,33 @@
  * Created by tintoverano on 2015.01.28..
  */
 
-Template.weekStripe.helpers ({
-  options: function () {
-    return {
-      events: function (start, end, timezone, callback) {
-        var deadLines = [
-          {
-            title  : 'event1',
-            start  : '2015-01-28'
-          },
-          {
-            title  : 'event2',
-            start  : '2015-01-29',
-            end    : '2015-01-29'
-          },
-          {
-            title  : 'event3',
-            start  : '2015-01-30',
-            allDay : false // will make the time show
-          }
-        ];
-        console.log ("cal events: " + deadLines);
-        callback (deadLines);
-      },
+Template.weekStripe.rendered = function () {
+  this.$('#jobCal').fullCalendar ({
+    events: function (start, end, timezone, callback) {
+      callback (dueDates)
+    },
+    eventClick: function (calEvent, jsEvent, view) {
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
+      dueDates = [];
+      $('#searchBox')[0].placeholder = calEvent.title;
+      JobSearch.search (calEvent.title);
+    },
+    dayClick: function (date, jsEvent, view) {
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
+      dueDates = [];
+      $('#searchBox')[0].placeholder = "Type to search jobs...";
+      JobSearch.search ('');
+    },
+    defaultView: 'basicWeek',
+    firstDay: 1,
+    height: 150
+  });
+};
 
-      defaultView: 'basicWeek',
-
-      firstDay: 1,
-
-      height: 150
-    }
-  }
+Template.weekStripe.events ({
+  //'click ....': function(e,template) {
+    //template.$('#cal').fullCalendar('rerenderEvents');
+  //}
 });

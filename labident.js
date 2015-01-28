@@ -60,7 +60,6 @@ Files.allow ({
 
 if (Meteor.isClient) {
   Meteor.startup (function () {
-    //Session.set ("activeJob", 0);
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
   });
@@ -70,6 +69,8 @@ if (Meteor.isClient) {
   teethBottomLeft = [];
   teethTopRight = [];
   teethBottomRight = [];
+
+  dueDates = [];
 
   var searchOptions = {
     keepHistory: 1000 * 60,
@@ -90,44 +91,30 @@ if (Meteor.isClient) {
 
   Template.jobs.helpers ({
     jobs: function () {
-      /*var items = Jobs.find ({}, {sort: {dueDate: 1}}).map (function (doc, index) {
-        var anIndex = index;
-        return _.extend (doc, {index: index});
-      });
-      if (items[0] && Session.get ("job_id") == undefined) {
-        Session.set("job_id", items[0]._id);
-        //console.log ("jobs template init: " + Session.get ("job_id"));
-      }*/
       var items = JobSearch.getData ({
         transform: function (matchText, regExp) {
-          return matchText.replace (regExp, "<b>$&</b>")
+          return matchText;
+//          return matchText.replace (regExp, "<b>$&</b>")
         },
         sort: {dueDate: 1}
       });
       items.map (function (doc, index) {
-        var anIndex = index;
         return _.extend (doc, {index: index});
       });
-      /*if (items[0] && Session.get ("job_id") == undefined) {
-        Session.set("job_id", items[0]._id);
-        console.log ("jobs template init: " + Session.get ("job_id"));
-      }*/
-      //console.log (items);
+      for (var i = 0, l = items.length; i < l; i++) {
+        dueDates [i] = {title: items[i].jobNumber, start: items[i].dueDate, backgroundColor: "red"};
+      };
+      if (i != 0)
+        $('#jobCal').fullCalendar ('refetchEvents');
       return items;
     },
 
     job: function () {
-      //console.log ("session job _id: " + Session.get ("job_id"));
       var jobId = Session.get ("job_id");
       if (jobId != null)
         theJob = Jobs.findOne (jobId);
       else
         theJob = null;
-      /*if (theJob == undefined)
-        console.log ("no Job @ job: function ()");
-      else
-        console.log (theJob._id);
-      console.log ("job (template): " + Session.get ("activeJob"));*/
       return theJob;
     },
 
@@ -145,6 +132,7 @@ if (Meteor.isClient) {
       var text = $(e.target).val ().trim ();
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
+      dueDates = [];
       JobSearch.search (text);
     }, 200),
 
@@ -152,8 +140,6 @@ if (Meteor.isClient) {
       var clickedJob = this.index;
       if (Session.get ("activeJob") != clickedJob) {
         Session.set ("activeJob", clickedJob);
-        //console.log ("before click job : " + Session.get ("job_id"));
-        //console.log ("after click job : " + this._id);
         Session.set ("job_id", this._id);
         teethTopLeft = [];
         teethBottomLeft = [];
@@ -249,8 +235,8 @@ if (Meteor.isServer) {
         {"patient.name": regExp}
       ]};
       return Jobs.find (selector, options).fetch ();
-    } else
-      return Jobs.find ({}, options).fetch ();
+    }
+    return Jobs.find ({}, options).fetch ();
   });
 
   function buildRegExp (searchText) {
