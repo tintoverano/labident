@@ -107,6 +107,7 @@ tsega:bootstrap3-datetimepicker@3.1.3_3
 ui@1.0.5
 underscore@1.0.2
 url@1.0.3
+user-session@0.0.0
 webapp@1.1.6
 webapp-hashing@1.0.2
 yogiben:autoform-file@0.1.7

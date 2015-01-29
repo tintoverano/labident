@@ -26,9 +26,3 @@ Template.weekStripe.rendered = function () {
     height: 150
   });
 };
-
-Template.weekStripe.events ({
-  //'click ....': function(e,template) {
-    //template.$('#cal').fullCalendar('rerenderEvents');
-  //}
-});

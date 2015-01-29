@@ -64,6 +64,7 @@ if (Meteor.isClient) {
     //SimpleSchema.debug = true;
   });
 
+  UserSession.set ("checkInProgress", "In progress", Meteor.userId ());
   theJob = {};
   teethTopLeft = [];
   teethBottomLeft = [];
@@ -73,10 +74,10 @@ if (Meteor.isClient) {
   dueDates = [];
 
   var searchOptions = {
-    keepHistory: 1000 * 60,
+    keepHistory: 0,
     localSearch: true
   };
-  var searchFields = ['jobNumber', 'dentist.name', 'patient.name'];
+  var searchFields = ['jobNumber', 'status', 'dentist.name', 'patient.name'];
   JobSearch = new SearchSource ('jobs', searchFields, searchOptions);
 
   Template.notFoundPage.events ({
@@ -96,7 +97,8 @@ if (Meteor.isClient) {
           return matchText;
 //          return matchText.replace (regExp, "<b>$&</b>")
         },
-        sort: {dueDate: 1}
+        sort: {dueDate: 1},
+        limit: 0
       });
       items.map (function (doc, index) {
         return _.extend (doc, {index: index});
@@ -146,6 +148,15 @@ if (Meteor.isClient) {
         teethTopRight = [];
         teethBottomRight = [];
       }
+    },
+
+    "click #checkInProgress": function () {
+      UserSession.set ("checkInProgress", this.checked ? "In progress" : "Finished", Meteor.userId ());
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
+      dueDates = [];
+      JobSearch.search ('');
+      //$('#jobCal').fullCalendar ('refetchEvents');
     }
   });
 
@@ -205,7 +216,7 @@ if (Meteor.isServer) {
   //Kadira.connect ('mngy4najCxkLiREdf', '794692bb-703d-4a6a-8150-2f3c8fbe9434')
 
   Meteor.startup (function () {
-    Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1});
+    Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1}, {status: 1});
   });
 
   Meteor.publish ("jobs", function () {
@@ -225,18 +236,20 @@ if (Meteor.isServer) {
   });
 
   SearchSource.defineSource ('jobs', function (searchText, options) {
-    var options = {sort: {dueDate: 1}};
+    var defaultOptions = {sort: {dueDate: 1}, limit: 0};
+    var myStatus = UserSession.get("checkInProgress", Meteor.userId());
 
     if (searchText) {
-      var regExp = buildRegExp (searchText);
-      var selector = {$or: [
-        {jobNumber: regExp},
-        {"dentist.name": regExp},
-        {"patient.name": regExp}
-      ]};
-      return Jobs.find (selector, options).fetch ();
+      var regExp = buildRegExp(searchText);
+      var selector = {
+        $and: [
+          {status: myStatus},
+          {$or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]}
+        ]
+      }
+      return Jobs.find (selector, defaultOptions).fetch ();
     }
-    return Jobs.find ({}, options).fetch ();
+    return Jobs.find ({status: myStatus}, defaultOptions).fetch ();
   });
 
   function buildRegExp (searchText) {
