@@ -5,8 +5,7 @@ Number.prototype.pad = function (size) {
 };
 
 Images = new FS.Collection ("patientImages", {
-  stores: [new FS.Store.FileSystem ("patientImages", {path: "~/uploads"})],
-  //stores: [new FS.Store.FileSystem ("patientImages")],
+  stores: [new FS.Store.FileSystem ("patientImages", {path: "/opt/cfs/labident/images"})],
   filter: {
     allow: {
       contentTypes: ['image/*']
@@ -15,8 +14,7 @@ Images = new FS.Collection ("patientImages", {
 });
 
 Files = new FS.Collection ("patientFiles", {
-  stores: [new FS.Store.FileSystem ("patientFiles", {path: "~/uploads"})],
-  //stores: [new FS.Store.FileSystem ("patientFiles")],
+  stores: [new FS.Store.FileSystem ("patientFiles", {path: "/opt/cfs/labident/files"})],
   filter: {
     deny: {
       contentTypes: ['image/*']
@@ -62,26 +60,25 @@ Files.allow ({
 
 if (Meteor.isClient) {
   Meteor.startup (function () {
-    Session.set ("activeJob", 0);
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
   });
 
+  UserSession.set ("checkInProgress", "In progress", Meteor.userId ());
   theJob = {};
   teethTopLeft = [];
   teethBottomLeft = [];
   teethTopRight = [];
   teethBottomRight = [];
 
-  Template.weekStripe.helpers ({
-    options: function () {
-      return {
-        defaultView: 'basicWeek',
-        firstDay: 1,
-        height: 150
-      }
-    }
-  });
+  dueDates = [];
+
+  var searchOptions = {
+    keepHistory: 0,
+    localSearch: true
+  };
+  var searchFields = ['jobNumber', 'status', 'dentist.name', 'patient.name'];
+  JobSearch = new SearchSource ('jobs', searchFields, searchOptions);
 
   Template.notFoundPage.events ({
     'click #notFoundErrorMessage': function () {
@@ -89,327 +86,77 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.jobs.helpers ({
+  Template.jobs.rendered = function () {
+    JobSearch.search ('');
+  };
 
+  Template.jobs.helpers ({
     jobs: function () {
-      var items = Jobs.find({}, {sort: {dueDate: 1}}).map(function (doc, index) {
-        var anIndex = index;
-        return _.extend(doc, {index: index});
+      var items = JobSearch.getData ({
+        transform: function (matchText, regExp) {
+          return matchText;
+//          return matchText.replace (regExp, "<b>$&</b>")
+        },
+        sort: {dueDate: 1},
+        limit: 0
       });
-      if (items[0] && Session.get ("job_id") == undefined) {
-        Session.set("job_id", items[0]._id);
-        //console.log ("jobs template init: " + Session.get ("job_id"));
-      }
+      items.map (function (doc, index) {
+        return _.extend (doc, {index: index});
+      });
+      for (var i = 0, l = items.length; i < l; i++) {
+        dueDates [i] = {title: items[i].jobNumber, start: items[i].dueDate, backgroundColor: "red"};
+      };
+      if (i != 0)
+        $('#jobCal').fullCalendar ('refetchEvents');
       return items;
     },
 
     job: function () {
-      //console.log ("session job _id: " + Session.get ("job_id"));
-      theJob = Jobs.findOne (Session.get ("job_id"));
-      /*if (theJob == undefined)
-        console.log ("no Job @ job: function ()");
+      var jobId = Session.get ("job_id");
+      if (jobId != null)
+        theJob = Jobs.findOne (jobId);
       else
-        console.log (theJob._id);
-      console.log ("job (template): " + Session.get ("activeJob"));*/
+        theJob = null;
       return theJob;
     },
 
     simpleDate: function (aDate) {
-      return moment(aDate).format('ll');
-    },
-
-    simpleDateTime: function (aDate) {
-      return moment(aDate).format('lll');
-    },
-
-    jobStatus: function (aStatus) {
-      if (aStatus != "Finished")
-        return "fa-cogs";
-      return "fa fa-check-square-o fa-3x";
-    },
-
-    jobStatusColor: function (aStatus) {
-      if (aStatus != "Finished")
-        return "red";
-      return "green";
+      return moment (aDate).format ('ll');
     },
 
     notActive: function (index) {
       return (index == Session.get ("activeJob"));
-    },
-
-    checkImplantTopLeft: function (aTooth) {
-      //console.log ("checkImplantTopLeft");
-      if (theJob != null) {
-        //console.log (theJob._id);
-        var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
-        if (toothDoc) {
-          var dia = "";
-          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (implant)
-            dia = implant.dia;
-
-          var icon = "fa-square-o";
-          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (marking)
-            icon = marking.icon;
-
-          var toothData = {};
-          toothData["tooth"] = aTooth;
-          toothData["dia"] = dia;
-          toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = icon;
-
-          teethTopLeft.push(toothData);
-
-          return true;
-        }
-      }
-      return false;
-    },
-
-    getDiameterTopLeft: function (aTooth) {
-      //console.log ("getDiameterTopLeft" + " " + aTooth);
-      if (_.size (teethTopLeft) > 0) {
-        var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.dia;
-      }
-      return "";
-    },
-
-    getImplantNameTopLeft: function (aTooth) {
-      //console.log ("getImplantNameTopLeft" + " " + aTooth);
-      if (_.size (teethTopLeft) > 0) {
-        var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.implantName;
-      }
-      return "";
-    },
-
-    checkImplantIconTopLeft: function (aTooth) {
-      //console.log ("checkImplantIconTopLeft" + " " + aTooth);
-      if (_.size (teethTopLeft) > 0) {
-          var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
-          if (toothDoc)
-              return toothDoc.marking;
-      }
-      return "fa-square-o";
-    },
-
-    checkImplantBottomLeft: function (aTooth) {
-      //console.log ("checkImplantBottomLeft");
-      if (_.size (teethBottomLeft) > 0)
-        if (_.findWhere(teethBottomLeft, {"tooth": aTooth}))
-          return true;
-      return false;
-    },
-
-    getDiameterBottomLeft: function (aTooth) {
-      //console.log ("getDiameterBottomLeft" + " " + aTooth);
-      if (_.size (teethBottomLeft) > 0) {
-        var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.dia;
-      }
-      return "";
-    },
-
-    getImplantNameBottomLeft: function (aTooth) {
-      //console.log ("getImplantNameBottomLeft" + " " + aTooth);
-      if (_.size (teethBottomLeft) > 0) {
-        var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.implantName;
-      }
-      return "";
-    },
-
-    checkImplantIconBottomLeft: function (aTooth) {
-      //console.log ("checkImplantIconBottomLeft" + " " + aTooth);
-      if (theJob != null) {
-        //console.log (theJob._id);
-        var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
-        if (toothDoc) {
-          var dia = "";
-          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (implant)
-            dia = implant.dia;
-
-          var icon = "fa-square-o";
-          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (marking)
-            icon = marking.icon;
-
-          var toothData = {};
-          toothData["tooth"] = aTooth;
-          toothData["dia"] = dia;
-          toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = icon;
-
-          teethBottomLeft.push(toothData);
-        }
-      }
-      if (_.size (teethBottomLeft) > 0) {
-        var theTooth = _.findWhere (teethBottomLeft, {"tooth": aTooth});
-        if (theTooth)
-          return theTooth.marking;
-      }
-      return "fa-square-o";
-    },
-
-    checkImplantTopRight: function (aTooth) {
-      //console.log ("checkImplantTopRight");
-      if (theJob != null) {
-        //console.log (theJob._id);
-        var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
-        if (toothDoc) {
-          var dia = "";
-          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (implant)
-            dia = implant.dia;
-
-          var icon = "fa-square-o";
-          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (marking)
-            icon = marking.icon;
-
-          var toothData = {};
-          toothData["tooth"] = aTooth;
-          toothData["dia"] = dia;
-          toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = icon;
-
-          teethTopRight.push(toothData);
-
-          return true;
-        }
-      }
-      return false;
-    },
-
-    getDiameterTopRight: function (aTooth) {
-      //console.log ("getDiameterTopRight" + " " + aTooth);
-      if (_.size (teethTopRight) > 0) {
-        var toothDoc = _.findWhere (teethTopRight , {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.dia;
-      }
-      return "";
-    },
-
-    getImplantNameTopRight: function (aTooth) {
-      //console.log ("getImplantNameTopRight" + " " + aTooth);
-      if (_.size (teethTopRight) > 0) {
-        var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.implantName;
-      }
-      return "";
-    },
-
-    checkImplantIconTopRight: function (aTooth) {
-      //console.log ("checkImplantIconTopRight" + " " + aTooth);
-      if (_.size (teethTopRight) > 0) {
-        var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.marking;
-      }
-      return "fa-square-o";
-    },
-
-    checkImplantBottomRight: function (aTooth) {
-      //console.log ("checkImplantBottomRight");
-      if (_.size (teethBottomRight) > 0)
-        if (_.findWhere (teethBottomRight , {"tooth": aTooth}))
-          return true;
-      return false;
-    },
-
-    getDiameterBottomRight: function (aTooth) {
-      //console.log ("getDiameterBottomRight" + " " + aTooth);
-      if (_.size (teethBottomRight) > 0) {
-        var toothDoc = _.findWhere (teethBottomRight , {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.dia;
-      }
-      return "";
-    },
-
-    getImplantNameBottomRight: function (aTooth) {
-      //console.log ("getImplantNameBottomRight" + " " + aTooth);
-      if (_.size (teethBottomRight) > 0) {
-        var toothDoc = _.findWhere(teethBottomRight, {"tooth": aTooth});
-        if (toothDoc)
-          return toothDoc.implantName;
-      }
-      return "";
-    },
-
-    checkImplantIconBottomRight: function (aTooth) {
-      //console.log ("checkImplantIconBottomRight" + " " + aTooth);
-      if (theJob != null) {
-        //console.log (theJob._id);
-        var toothDoc = _.findWhere (theJob.patient.teeth , {"tooth": aTooth});
-        if (toothDoc) {
-          var dia = "";
-          var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
-          if (implant)
-            dia = implant.dia;
-
-          var icon = "fa-square-o";
-          var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
-          if (marking)
-            icon = marking.icon;
-
-          var toothData = {};
-          toothData["tooth"] = aTooth;
-          toothData["dia"] = dia;
-          toothData["implantName"] = toothDoc.implantPlatform;
-          toothData["marking"] = icon;
-
-          teethBottomRight.push(toothData);
-        }
-      }
-      if (_.size (teethBottomRight) > 0) {
-        var theTooth = _.findWhere(teethBottomRight, {"tooth": aTooth});
-        if (theTooth)
-          return theTooth.marking;
-      }
-      return "fa-square-o";
-    },
-
-    getImageUrl: function (pictId) {
-      return Images.findOne (pictId).url ();
-    },
-
-    getImageName: function (pictId) {
-      return Images.findOne (pictId).name ();
-    },
-
-    getFileUrl: function (fileId) {
-      return Files.findOne (fileId).url ();
-    },
-
-    getFileName: function (fileId) {
-      return Files.findOne (fileId).name ();
     }
   });
 
   Template.jobs.events ({
+    "keyup #searchBox": _.throttle (function (e) {
+      var text = $(e.target).val ().trim ();
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
+      dueDates = [];
+      JobSearch.search (text);
+    }, 200),
+
     "click #jobListItem": function () {
       var clickedJob = this.index;
       if (Session.get ("activeJob") != clickedJob) {
         Session.set ("activeJob", clickedJob);
-        //console.log ("before click job : " + Session.get ("job_id"));
-        //console.log ("after click job : " + this._id);
         Session.set ("job_id", this._id);
         teethTopLeft = [];
         teethBottomLeft = [];
         teethTopRight = [];
         teethBottomRight = [];
       }
+    },
+
+    "click #checkInProgress": function () {
+      UserSession.set ("checkInProgress", this.checked ? "In progress" : "Finished", Meteor.userId ());
+      Session.set ("activeJob", -1);
+      Session.set ("job_id", null);
+      dueDates = [];
+      JobSearch.search ('');
+      //$('#jobCal').fullCalendar ('refetchEvents');
     }
   });
 
@@ -465,8 +212,11 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+
+  //Kadira.connect ('mngy4najCxkLiREdf', '794692bb-703d-4a6a-8150-2f3c8fbe9434')
+
+  Meteor.startup (function () {
+    Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1}, {status: 1});
   });
 
   Meteor.publish ("jobs", function () {
@@ -484,4 +234,26 @@ if (Meteor.isServer) {
 
   Meteor.methods ({
   });
+
+  SearchSource.defineSource ('jobs', function (searchText, options) {
+    var defaultOptions = {sort: {dueDate: 1}, limit: 0};
+    var myStatus = UserSession.get("checkInProgress", Meteor.userId());
+
+    if (searchText) {
+      var regExp = buildRegExp(searchText);
+      var selector = {
+        $and: [
+          {status: myStatus},
+          {$or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]}
+        ]
+      }
+      return Jobs.find (selector, defaultOptions).fetch ();
+    }
+    return Jobs.find ({status: myStatus}, defaultOptions).fetch ();
+  });
+
+  function buildRegExp (searchText) {
+    var parts = searchText.trim ().split (/[ \-\:]+/);
+    return new RegExp ("(" + parts.join ('|') + ")", "ig");
+  }
 }

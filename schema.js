@@ -211,7 +211,7 @@ jobSchema = new SimpleSchema ({
             options: function () {
                 return [
                     {label: "None", value: "None"},
-                    {label: "4 year", value: "1 year"},
+                    {label: "1 year", value: "1 year"},
                     {label: "2 years", value: "2 years"},
                     {label: "3 years", value: "3 years"},
                     {label: "4 years", value: "4 years"},
