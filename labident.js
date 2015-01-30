@@ -77,7 +77,7 @@ if (Meteor.isClient) {
     keepHistory: 0,
     localSearch: true
   };
-  var searchFields = ['jobNumber', 'status', 'dentist.name', 'patient.name'];
+  var searchFields = ['jobNumber', 'dentist.name', 'patient.name'];
   JobSearch = new SearchSource ('jobs', searchFields, searchOptions);
 
   Template.notFoundPage.events ({
@@ -106,8 +106,7 @@ if (Meteor.isClient) {
       for (var i = 0, l = items.length; i < l; i++) {
         dueDates [i] = {title: items[i].jobNumber, start: items[i].dueDate, backgroundColor: "red"};
       };
-      if (i != 0)
-        $('#jobCal').fullCalendar ('refetchEvents');
+      $('#jobCal').fullCalendar ('refetchEvents');
       return items;
     },
 
@@ -150,8 +149,8 @@ if (Meteor.isClient) {
       }
     },
 
-    "click #checkInProgress": function () {
-      UserSession.set ("checkInProgress", this.checked ? "In progress" : "Finished", Meteor.userId ());
+    "click #checkInProgress": function (event) {
+      UserSession.set ("checkInProgress", event.currentTarget.checked ? "In progress" : "Finished", Meteor.userId ());
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
       dueDates = [];
@@ -237,15 +236,13 @@ if (Meteor.isServer) {
 
   SearchSource.defineSource ('jobs', function (searchText, options) {
     var defaultOptions = {sort: {dueDate: 1}, limit: 0};
-    var myStatus = UserSession.get("checkInProgress", Meteor.userId());
+    var myStatus = UserSession.get ("checkInProgress", Meteor.userId ());
 
     if (searchText) {
       var regExp = buildRegExp(searchText);
       var selector = {
-        $and: [
-          {status: myStatus},
-          {$or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]}
-        ]
+          status: myStatus,
+          $or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]
       }
       return Jobs.find (selector, defaultOptions).fetch ();
     }
