@@ -103,6 +103,7 @@ if (Meteor.isClient) {
       items.map (function (doc, index) {
         return _.extend (doc, {index: index});
       });
+      dueDates = [];
       for (var i = 0, l = items.length; i < l; i++) {
         dueDates [i] = {title: items[i].jobNumber, start: items[i].dueDate, backgroundColor: "red"};
       };
@@ -133,7 +134,6 @@ if (Meteor.isClient) {
       var text = $(e.target).val ().trim ();
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       JobSearch.search (text);
     }, 200),
 
@@ -153,9 +153,7 @@ if (Meteor.isClient) {
       UserSession.set ("checkInProgress", event.currentTarget.checked ? "In progress" : "Finished", Meteor.userId ());
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       JobSearch.search ('');
-      //$('#jobCal').fullCalendar ('refetchEvents');
     }
   });
 
