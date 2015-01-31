@@ -10,14 +10,12 @@ Template.weekStripe.rendered = function () {
     eventClick: function (calEvent, jsEvent, view) {
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       $('#searchBox')[0].placeholder = calEvent.title;
       JobSearch.search (calEvent.title);
     },
     dayClick: function (date, jsEvent, view) {
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       $('#searchBox')[0].placeholder = "Type to search jobs...";
       JobSearch.search ('');
     },

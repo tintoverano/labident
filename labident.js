@@ -1,9 +1,3 @@
-Number.prototype.pad = function (size) {
-  var s = String (this);
-  while (s.length < (size || 2)) {s = "0" + s;}
-  return s;
-};
-
 Images = new FS.Collection ("patientImages", {
   stores: [new FS.Store.FileSystem ("patientImages", {path: "/opt/cfs/labident/images"})],
   filter: {
@@ -59,6 +53,12 @@ Files.allow ({
 });
 
 if (Meteor.isClient) {
+  Number.prototype.pad = function (size) {
+    var s = String (this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
+  };
+
   Meteor.startup (function () {
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
@@ -77,7 +77,7 @@ if (Meteor.isClient) {
     keepHistory: 0,
     localSearch: true
   };
-  var searchFields = ['jobNumber', 'status', 'dentist.name', 'patient.name'];
+  var searchFields = ['jobNumber', 'dentist.name', 'patient.name'];
   JobSearch = new SearchSource ('jobs', searchFields, searchOptions);
 
   Template.notFoundPage.events ({
@@ -103,11 +103,11 @@ if (Meteor.isClient) {
       items.map (function (doc, index) {
         return _.extend (doc, {index: index});
       });
+      dueDates = [];
       for (var i = 0, l = items.length; i < l; i++) {
         dueDates [i] = {title: items[i].jobNumber, start: items[i].dueDate, backgroundColor: "red"};
       };
-      if (i != 0)
-        $('#jobCal').fullCalendar ('refetchEvents');
+      $('#jobCal').fullCalendar ('refetchEvents');
       return items;
     },
 
@@ -134,7 +134,6 @@ if (Meteor.isClient) {
       var text = $(e.target).val ().trim ();
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       JobSearch.search (text);
     }, 200),
 
@@ -150,13 +149,12 @@ if (Meteor.isClient) {
       }
     },
 
-    "click #checkInProgress": function () {
-      UserSession.set ("checkInProgress", this.checked ? "In progress" : "Finished", Meteor.userId ());
+    "click #checkInProgress": function (event) {
+      UserSession.set ("checkInProgress", event.currentTarget.checked ? "In progress" : "Finished", Meteor.userId ());
+      //console.log (UserSession.get ("checkInProgress"));
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
-      dueDates = [];
       JobSearch.search ('');
-      //$('#jobCal').fullCalendar ('refetchEvents');
     }
   });
 
@@ -171,8 +169,8 @@ if (Meteor.isClient) {
           var today = new Date ();
           var nextJobNumber = 1;
           var myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + nextJobNumber.pad(3);
-          var aJob;
-          while (aJob = Jobs.findOne ({jobNumber: myJobNumber}, {jobNumber: 1})) {
+          //var aJob;
+          while (Jobs.findOne ({jobNumber: myJobNumber}, {jobNumber: 1})) {
             myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + (++nextJobNumber).pad(3);
           };
           doc.jobNumber = myJobNumber;
@@ -213,8 +211,6 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
 
-  //Kadira.connect ('mngy4najCxkLiREdf', '794692bb-703d-4a6a-8150-2f3c8fbe9434')
-
   Meteor.startup (function () {
     Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1}, {status: 1});
   });
@@ -237,15 +233,13 @@ if (Meteor.isServer) {
 
   SearchSource.defineSource ('jobs', function (searchText, options) {
     var defaultOptions = {sort: {dueDate: 1}, limit: 0};
-    var myStatus = UserSession.get("checkInProgress", Meteor.userId());
+    var myStatus = UserSession.get ("checkInProgress", Meteor.userId ());
 
     if (searchText) {
       var regExp = buildRegExp(searchText);
       var selector = {
-        $and: [
-          {status: myStatus},
-          {$or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]}
-        ]
+          status: myStatus,
+          $or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]
       }
       return Jobs.find (selector, defaultOptions).fetch ();
     }
