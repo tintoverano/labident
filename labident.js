@@ -1,9 +1,3 @@
-Number.prototype.pad = function (size) {
-  var s = String (this);
-  while (s.length < (size || 2)) {s = "0" + s;}
-  return s;
-};
-
 Images = new FS.Collection ("patientImages", {
   stores: [new FS.Store.FileSystem ("patientImages", {path: "/opt/cfs/labident/images"})],
   filter: {
@@ -59,6 +53,12 @@ Files.allow ({
 });
 
 if (Meteor.isClient) {
+  Number.prototype.pad = function (size) {
+    var s = String (this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
+  };
+
   Meteor.startup (function () {
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
@@ -151,6 +151,7 @@ if (Meteor.isClient) {
 
     "click #checkInProgress": function (event) {
       UserSession.set ("checkInProgress", event.currentTarget.checked ? "In progress" : "Finished", Meteor.userId ());
+      //console.log (UserSession.get ("checkInProgress"));
       Session.set ("activeJob", -1);
       Session.set ("job_id", null);
       JobSearch.search ('');
@@ -209,8 +210,6 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-
-  //Kadira.connect ('mngy4najCxkLiREdf', '794692bb-703d-4a6a-8150-2f3c8fbe9434')
 
   Meteor.startup (function () {
     Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1}, {status: 1});
