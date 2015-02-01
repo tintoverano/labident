@@ -1,57 +1,3 @@
-Images = new FS.Collection ("patientImages", {
-  stores: [new FS.Store.FileSystem ("patientImages", {path: "/opt/cfs/labident/images"})],
-  filter: {
-    allow: {
-      contentTypes: ['image/*']
-    }
-  }
-});
-
-Files = new FS.Collection ("patientFiles", {
-  stores: [new FS.Store.FileSystem ("patientFiles", {path: "/opt/cfs/labident/files"})],
-  filter: {
-    deny: {
-      contentTypes: ['image/*']
-    }
-  }
-});
-
-Images.allow ({
-  insert: function (userId, doc) {
-    // the user must be logged in, and the document must be owned by the user
-    //return (userId && doc.owner === userId);
-    return true;
-  },
-  update: function (userId, doc, fields, modifier) {
-    // can only change your own documents
-    //return doc.owner === userId;
-    return true;
-  },
-  remove: function (userId, doc) {
-    // can only remove your own documents
-    //return doc.owner === userId;
-    return false;
-  }
-});
-
-Files.allow ({
-  insert: function (userId, doc) {
-    // the user must be logged in, and the document must be owned by the user
-    //return (userId && doc.owner === userId);
-    return true;
-  },
-  update: function (userId, doc, fields, modifier) {
-    // can only change your own documents
-    //return doc.owner === userId;
-    return true;
-  },
-  remove: function (userId, doc) {
-    // can only remove your own documents
-    //return doc.owner === userId;
-    return false;
-  }
-});
-
 if (Meteor.isClient) {
   Number.prototype.pad = function (size) {
     var s = String (this);
@@ -64,7 +10,6 @@ if (Meteor.isClient) {
     //SimpleSchema.debug = true;
   });
 
-  UserSession.set ("checkInProgress", "In progress", Meteor.userId ());
   theJob = {};
   teethTopLeft = [];
   teethBottomLeft = [];
@@ -126,6 +71,10 @@ if (Meteor.isClient) {
 
     notActive: function (index) {
       return (index == Session.get ("activeJob"));
+    },
+
+    getInProgress: function () {
+      return UserSession.get ("checkInProgress", Meteor.userId () == "In progress" ? true : false);
     }
   });
 
@@ -210,27 +159,6 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-
-  Meteor.startup (function () {
-    Jobs._ensureIndex ({"dentist.name": 1}, {"patient.name": 1}, {jobNumber: 1}, {status: 1});
-  });
-
-  Meteor.publish ("jobs", function () {
-    Counts.publish (this, 'totalJobs', Jobs.find (), {noReady: true});
-    return (Jobs.find ());
-  });
-
-  Meteor.publish ("patientImages", function () {
-    return (Images.find ());
-  });
-
-  Meteor.publish ("patientFiles", function () {
-    return (Files.find ());
-  });
-
-  Meteor.methods ({
-  });
-
   SearchSource.defineSource ('jobs', function (searchText, options) {
     var defaultOptions = {sort: {dueDate: 1}, limit: 0};
     var myStatus = UserSession.get ("checkInProgress", Meteor.userId ());
