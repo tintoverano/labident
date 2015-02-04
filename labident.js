@@ -8,6 +8,8 @@ if (Meteor.isClient) {
   Meteor.startup (function () {
     //AutoForm.debug ();
     //SimpleSchema.debug = true;
+    alertify.set ('notifier','position', 'top-right');
+    alertify.set('notifier','delay', 5);
   });
 
   theJob = {};
@@ -74,7 +76,7 @@ if (Meteor.isClient) {
     },
 
     getInProgress: function () {
-      return UserSession.get ("checkInProgress", Meteor.userId () == "In progress" ? true : false);
+      return (UserSession.get ("checkInProgress", Meteor.userId ()) == "In progress" ? "checked" : "");
     }
   });
 
@@ -107,6 +109,16 @@ if (Meteor.isClient) {
     }
   });
 
+  function jobFormSuccess (newJob) {
+    var updateSuccces = "Your changes are saved.";
+    var createSuccess = "New job is created.";
+
+    if (newJob)
+      alertify.success (createSuccess);
+    else
+      alertify.success (updateSuccces);
+  };
+
   AutoForm.hooks ({
     newJob: {
       before: {
@@ -127,31 +139,63 @@ if (Meteor.isClient) {
         }
       },
 
+      onSubmit: function (insertDoc, updateDoc, currentDoc) {
+        // You must call this.done()!
+        //this.done(); // submitted successfully, call onSuccess
+        //this.done (new Error ('Please check form for problems.')); // failed to submit, call onError with the provided error
+        //this.done(null, "foo"); // submitted successfully, call onSuccess with `result` arg set to "foo"
+      },
+
+      onError: function (operation, error, template) {
+        alertify.error (error.message);
+      },
+
       onSuccess: function (operation, result, template) {
+        jobFormSuccess (true);
         Router.go("/");
       }
     },
 
     editJobDetails: {
+      onError: function (operation, error, template) {
+        alertify.error (error.message);
+      },
+
       onSuccess: function (operation, result, template) {
+        jobFormSuccess ();
         Router.go("/");
       }
     },
 
     editPatient: {
+      onError: function (operation, error, template) {
+        alertify.error (error.message);
+      },
+
       onSuccess: function (operation, result, template) {
+        jobFormSuccess ();
         Router.go("/");
       }
     },
 
     editThirdParties: {
+      onError: function (operation, error, template) {
+        alertify.error (error.message);
+      },
+
       onSuccess: function (operation, result, template) {
+        jobFormSuccess ();
         Router.go("/");
       }
     },
 
     editDentist: {
+      onError: function (operation, error, template) {
+        alertify.error (error.message);
+      },
+
       onSuccess: function (operation, result, template) {
+        jobFormSuccess ();
         Router.go("/");
       }
     }
@@ -159,23 +203,4 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  SearchSource.defineSource ('jobs', function (searchText, options) {
-    var defaultOptions = {sort: {dueDate: 1}, limit: 0};
-    var myStatus = UserSession.get ("checkInProgress", Meteor.userId ());
-
-    if (searchText) {
-      var regExp = buildRegExp(searchText);
-      var selector = {
-          status: myStatus,
-          $or: [{jobNumber: regExp}, {"dentist.name": regExp}, {"patient.name": regExp}]
-      }
-      return Jobs.find (selector, defaultOptions).fetch ();
-    }
-    return Jobs.find ({status: myStatus}, defaultOptions).fetch ();
-  });
-
-  function buildRegExp (searchText) {
-    var parts = searchText.trim ().split (/[ \-\:]+/);
-    return new RegExp ("(" + parts.join ('|') + ")", "ig");
-  }
 }
