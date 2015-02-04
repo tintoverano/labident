@@ -26,10 +26,12 @@ momentjs:moment
 underscore
 fortawesome:fontawesome
 tmeasday:publish-counts
-yogiben:autoform-file
 cfs:standard-packages
 cfs:filesystem
 meteorhacks:search-source
 meteorhacks:kadira
-benjaminrh:user-session
 meteorhacks:zones
+coffeescript
+benjaminrh:user-session
+okgrow:iron-router-autoscroll
+ovcharik:alertifyjs

@@ -85,8 +85,10 @@ mrt:jquery-ui@1.9.2
 natestrauser:select2@3.5.1
 npm-bcrypt@0.7.7
 observe-sequence@1.0.4
+okgrow:iron-router-autoscroll@0.0.6
 ongoworks:security@1.0.1
 ordered-dict@1.0.2
+ovcharik:alertifyjs@1.1.0
 raix:eventemitter@0.1.1
 random@1.0.2
 reactive-dict@1.0.5
@@ -111,5 +113,4 @@ underscore@1.0.2
 url@1.0.3
 webapp@1.1.6
 webapp-hashing@1.0.2
-yogiben:autoform-file@0.1.9
 zimme:select2-bootstrap3-css@1.4.1
