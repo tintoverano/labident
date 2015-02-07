@@ -130,7 +130,6 @@ if (Meteor.isClient) {
           var today = new Date ();
           var nextJobNumber = 1;
           var myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + nextJobNumber.pad(3);
-          //var aJob;
           while (Jobs.findOne ({jobNumber: myJobNumber}, {jobNumber: 1})) {
             myJobNumber = today.getFullYear () % 100 + ('0' + (today.getMonth () +1)).slice (-2) + (++nextJobNumber).pad(3);
           };
