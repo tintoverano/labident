@@ -258,7 +258,7 @@ Template.jobItem.helpers ({
       }
     }
     if (_.size(teethBottomRight) > 0) {
-      var theTooth = _.findWhere(teethBottomRight, {"tooth": aTooth});
+      var theTooth = _.findWhere (teethBottomRight, {"tooth": aTooth});
       if (theTooth)
         return theTooth.marking;
     }
