@@ -1,3 +1,9 @@
+Meteor.users.deny ({
+  update: function () {
+    return true;
+  }
+});
+
 if (Meteor.isClient) {
   Number.prototype.pad = function (size) {
     var s = String (this);
@@ -98,6 +104,9 @@ if (Meteor.isClient) {
         teethTopRight = [];
         teethBottomRight = [];
       }
+      var jobId = Session.get ("job_id");
+      if (jobId != null)
+        theJob = Jobs.findOne (jobId);
     },
 
     "click #checkInProgress": function (event) {
@@ -115,8 +124,12 @@ if (Meteor.isClient) {
 
     if (newJob)
       alertify.success (createSuccess);
-    else
+    else {
+      var jobId = Session.get ("job_id");
+      if (jobId != null)
+        theJob = Jobs.findOne (jobId);
       alertify.success (updateSuccces);
+    }
   };
 
   AutoForm.hooks ({
@@ -162,7 +175,7 @@ if (Meteor.isClient) {
 
       onSuccess: function (operation, result, template) {
         jobFormSuccess ();
-        Router.go("/");
+        Router.go("job");
       }
     },
 
@@ -173,7 +186,7 @@ if (Meteor.isClient) {
 
       onSuccess: function (operation, result, template) {
         jobFormSuccess ();
-        Router.go("/");
+        Router.go("job");
       }
     },
 
@@ -184,7 +197,7 @@ if (Meteor.isClient) {
 
       onSuccess: function (operation, result, template) {
         jobFormSuccess ();
-        Router.go("/");
+        Router.go("job");
       }
     },
 
@@ -195,7 +208,7 @@ if (Meteor.isClient) {
 
       onSuccess: function (operation, result, template) {
         jobFormSuccess ();
-        Router.go("/");
+        Router.go("job");
       }
     }
   });

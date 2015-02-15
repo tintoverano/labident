@@ -1,6 +1,5 @@
 <template name="jobItem">
     <div class="col-sm-6">
-        <!--job-->
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <i class="fa fa-2x fa-cog pull-left"></i>
@@ -56,8 +55,60 @@
                     <h4 class="list-group-item-heading" style="color: blue">{{memo}}</h4>
                 </div>
             </div>
-            <!--div class="panel-footer"></div-->
         </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <i class="fa fa-2x fa-user-md pull-left"></i>
+                <h3 class="pull-left" style="margin-top: 1px">Dentist</h3>
+                <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit Dentist" href="editDentist">
+                    <i class="fa fa-pencil fa-2x"></i>
+                </a>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <label>Name</label>
+                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.name}}</h4>
+                </div>
+                <div class="list-group-item">
+                    <label>E-mail</label>
+                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.email}}</h4>
+                </div>
+                <div class="list-group-item">
+                    <label>Phone</label>
+                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.phone}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <i class="fa fa-2x fa-users pull-left"></i>
+                <h3 class="pull-left" style="margin-top: 1px">3rd Parties</h3>
+                <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit 3rd Parties" href="editThirdParties">
+                    <i class="fa fa-pencil fa-2x"></i>
+                </a>
+            </div>
+            <div class="list-group">
+                {{#each thirdParties}}
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Name</label>
+                                <h4 class="list-group-item-heading" style="color: blue">{{name}}</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Refrence Number</label>
+                                <h4 class="list-group-item-heading" style="color: blue">{{referenceNumber}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                {{/each }}
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
         <!--client-->
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
@@ -641,54 +692,5 @@
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <i class="fa fa-2x fa-users pull-left"></i>
-                <h3 class="pull-left" style="margin-top: 1px">3rd Parties</h3>
-                <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit 3rd Parties" href="editThirdParties">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </a>
-            </div>
-            <div class="list-group">
-                {{#each thirdParties}}
-                    <div class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Name</label>
-                                <h4 class="list-group-item-heading" style="color: blue">{{name}}</h4>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Refrence Number</label>
-                                <h4 class="list-group-item-heading" style="color: blue">{{referenceNumber}}</h4>
-                            </div>
-                        </div>
-                    </div>
-                {{/each }}
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-                <i class="fa fa-2x fa-user-md pull-left"></i>
-                <h3 class="pull-left" style="margin-top: 1px">Dentist</h3>
-                <a class="btn pull-right faMore simptip-position-top simptip-smooth simptip-fade" data-tooltip="Edit Dentist" href="editDentist">
-                    <i class="fa fa-pencil fa-2x"></i>
-                </a>
-            </div>
-            <div class="list-group">
-                <div class="list-group-item">
-                    <label>Name</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.name}}</h4>
-                </div>
-                <div class="list-group-item">
-                    <label>E-mail</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.email}}</h4>
-                </div>
-                <div class="list-group-item">
-                    <label>Phone</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.phone}}</h4>
-                </div>
-            </div>
-        </div>
     </div>
 </template>

@@ -27,15 +27,15 @@ Template.jobItem.helpers ({
     //console.log ("checkImplantTopLeft");
     if (theJob != null) {
       //console.log (theJob._id);
-      var toothDoc = _.findWhere(theJob.patient.teeth, {"tooth": aTooth});
+      var toothDoc = _.findWhere (theJob.patient.teeth, {"tooth": aTooth});
       if (toothDoc) {
         var dia = "";
-        var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+        var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
         if (implant)
           dia = implant.dia;
 
-        var icon = "fa-square-o";
-        var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+        var icon = "fa-check-square-o";
+        var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
         if (marking)
           icon = marking.icon;
 
@@ -45,7 +45,7 @@ Template.jobItem.helpers ({
         toothData["implantName"] = toothDoc.implantPlatform;
         toothData["marking"] = icon;
 
-        teethTopLeft.push(toothData);
+        teethTopLeft.push (toothData);
 
         return true;
       }
@@ -55,8 +55,8 @@ Template.jobItem.helpers ({
 
   getDiameterTopLeft: function (aTooth) {
     //console.log ("getDiameterTopLeft" + " " + aTooth);
-    if (_.size(teethTopLeft) > 0) {
-      var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
+    if (_.size (teethTopLeft) > 0) {
+      var toothDoc = _.findWhere (teethTopLeft, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.dia;
     }
@@ -65,8 +65,8 @@ Template.jobItem.helpers ({
 
   getImplantNameTopLeft: function (aTooth) {
     //console.log ("getImplantNameTopLeft" + " " + aTooth);
-    if (_.size(teethTopLeft) > 0) {
-      var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
+    if (_.size (teethTopLeft) > 0) {
+      var toothDoc = _.findWhere (teethTopLeft, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.implantName;
     }
@@ -75,8 +75,8 @@ Template.jobItem.helpers ({
 
   checkImplantIconTopLeft: function (aTooth) {
     //console.log ("checkImplantIconTopLeft" + " " + aTooth);
-    if (_.size(teethTopLeft) > 0) {
-      var toothDoc = _.findWhere(teethTopLeft, {"tooth": aTooth});
+    if (_.size (teethTopLeft) > 0) {
+      var toothDoc = _.findWhere (teethTopLeft, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.marking;
     }
@@ -85,16 +85,16 @@ Template.jobItem.helpers ({
 
   checkImplantBottomLeft: function (aTooth) {
     //console.log ("checkImplantBottomLeft");
-    if (_.size(teethBottomLeft) > 0)
-      if (_.findWhere(teethBottomLeft, {"tooth": aTooth}))
+    if (_.size (teethBottomLeft) > 0)
+      if (_.findWhere (teethBottomLeft, {"tooth": aTooth}))
         return true;
     return false;
   },
 
   getDiameterBottomLeft: function (aTooth) {
     //console.log ("getDiameterBottomLeft" + " " + aTooth);
-    if (_.size(teethBottomLeft) > 0) {
-      var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
+    if (_.size (teethBottomLeft) > 0) {
+      var toothDoc = _.findWhere (teethBottomLeft, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.dia;
     }
@@ -103,8 +103,8 @@ Template.jobItem.helpers ({
 
   getImplantNameBottomLeft: function (aTooth) {
     //console.log ("getImplantNameBottomLeft" + " " + aTooth);
-    if (_.size(teethBottomLeft) > 0) {
-      var toothDoc = _.findWhere(teethBottomLeft, {"tooth": aTooth});
+    if (_.size (teethBottomLeft) > 0) {
+      var toothDoc = _.findWhere (teethBottomLeft, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.implantName;
     }
@@ -115,15 +115,15 @@ Template.jobItem.helpers ({
     //console.log ("checkImplantIconBottomLeft" + " " + aTooth);
     if (theJob != null) {
       //console.log (theJob._id);
-      var toothDoc = _.findWhere(theJob.patient.teeth, {"tooth": aTooth});
+      var toothDoc = _.findWhere (theJob.patient.teeth, {"tooth": aTooth});
       if (toothDoc) {
         var dia = "";
-        var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+        var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
         if (implant)
           dia = implant.dia;
 
-        var icon = "fa-square-o";
-        var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+        var icon = "fa-check-square-o";
+        var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
         if (marking)
           icon = marking.icon;
 
@@ -133,11 +133,11 @@ Template.jobItem.helpers ({
         toothData["implantName"] = toothDoc.implantPlatform;
         toothData["marking"] = icon;
 
-        teethBottomLeft.push(toothData);
+        teethBottomLeft.push (toothData);
       }
     }
     if (_.size(teethBottomLeft) > 0) {
-      var theTooth = _.findWhere(teethBottomLeft, {"tooth": aTooth});
+      var theTooth = _.findWhere (teethBottomLeft, {"tooth": aTooth});
       if (theTooth)
         return theTooth.marking;
     }
@@ -148,15 +148,15 @@ Template.jobItem.helpers ({
     //console.log ("checkImplantTopRight");
     if (theJob != null) {
       //console.log (theJob._id);
-      var toothDoc = _.findWhere(theJob.patient.teeth, {"tooth": aTooth});
+      var toothDoc = _.findWhere (theJob.patient.teeth, {"tooth": aTooth});
       if (toothDoc) {
         var dia = "";
-        var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+        var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
         if (implant)
           dia = implant.dia;
 
-        var icon = "fa-square-o";
-        var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+        var icon = "fa-check-square-o";
+        var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
         if (marking)
           icon = marking.icon;
 
@@ -166,7 +166,7 @@ Template.jobItem.helpers ({
         toothData["implantName"] = toothDoc.implantPlatform;
         toothData["marking"] = icon;
 
-        teethTopRight.push(toothData);
+        teethTopRight.push (toothData);
 
         return true;
       }
@@ -177,7 +177,7 @@ Template.jobItem.helpers ({
   getDiameterTopRight: function (aTooth) {
     //console.log ("getDiameterTopRight" + " " + aTooth);
     if (_.size(teethTopRight) > 0) {
-      var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
+      var toothDoc = _.findWhere (teethTopRight, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.dia;
     }
@@ -187,7 +187,7 @@ Template.jobItem.helpers ({
   getImplantNameTopRight: function (aTooth) {
     //console.log ("getImplantNameTopRight" + " " + aTooth);
     if (_.size(teethTopRight) > 0) {
-      var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
+      var toothDoc = _.findWhere (teethTopRight, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.implantName;
     }
@@ -197,7 +197,7 @@ Template.jobItem.helpers ({
   checkImplantIconTopRight: function (aTooth) {
     //console.log ("checkImplantIconTopRight" + " " + aTooth);
     if (_.size(teethTopRight) > 0) {
-      var toothDoc = _.findWhere(teethTopRight, {"tooth": aTooth});
+      var toothDoc = _.findWhere (teethTopRight, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.marking;
     }
@@ -207,7 +207,7 @@ Template.jobItem.helpers ({
   checkImplantBottomRight: function (aTooth) {
     //console.log ("checkImplantBottomRight");
     if (_.size(teethBottomRight) > 0)
-      if (_.findWhere(teethBottomRight, {"tooth": aTooth}))
+      if (_.findWhere (teethBottomRight, {"tooth": aTooth}))
         return true;
     return false;
   },
@@ -215,7 +215,7 @@ Template.jobItem.helpers ({
   getDiameterBottomRight: function (aTooth) {
     //console.log ("getDiameterBottomRight" + " " + aTooth);
     if (_.size(teethBottomRight) > 0) {
-      var toothDoc = _.findWhere(teethBottomRight, {"tooth": aTooth});
+      var toothDoc = _.findWhere (teethBottomRight, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.dia;
     }
@@ -225,7 +225,7 @@ Template.jobItem.helpers ({
   getImplantNameBottomRight: function (aTooth) {
     //console.log ("getImplantNameBottomRight" + " " + aTooth);
     if (_.size(teethBottomRight) > 0) {
-      var toothDoc = _.findWhere(teethBottomRight, {"tooth": aTooth});
+      var toothDoc = _.findWhere (teethBottomRight, {"tooth": aTooth});
       if (toothDoc)
         return toothDoc.implantName;
     }
@@ -236,15 +236,15 @@ Template.jobItem.helpers ({
     //console.log ("checkImplantIconBottomRight" + " " + aTooth);
     if (theJob != null) {
       //console.log (theJob._id);
-      var toothDoc = _.findWhere(theJob.patient.teeth, {"tooth": aTooth});
+      var toothDoc = _.findWhere (theJob.patient.teeth, {"tooth": aTooth});
       if (toothDoc) {
         var dia = "";
-        var implant = _.findWhere(implantTypes, {value: toothDoc.implantPlatform});
+        var implant = _.findWhere (implantTypes, {value: toothDoc.implantPlatform});
         if (implant)
           dia = implant.dia;
 
-        var icon = "fa-square-o";
-        var marking = _.findWhere(markingTypes, {value: toothDoc.marking});
+        var icon = "fa-check-square-o";
+        var marking = _.findWhere (markingTypes, {value: toothDoc.marking});
         if (marking)
           icon = marking.icon;
 
@@ -254,7 +254,7 @@ Template.jobItem.helpers ({
         toothData["implantName"] = toothDoc.implantPlatform;
         toothData["marking"] = icon;
 
-        teethBottomRight.push(toothData);
+        teethBottomRight.push (toothData);
       }
     }
     if (_.size(teethBottomRight) > 0) {
