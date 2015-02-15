@@ -23,6 +23,16 @@ Template.jobItem.helpers ({
     return "green";
   },
 
+  dentistEmail: function (aName) {
+    var dentist = _.findWhere (dentists, {value: aName});
+    return dentist.email;
+  },
+
+  dentistPhone: function (aName) {
+    var dentist = _.findWhere (dentists, {value: aName});
+    return dentist.phone;
+  },
+
   checkImplantTopLeft: function (aTooth) {
     //console.log ("checkImplantTopLeft");
     if (theJob != null) {

@@ -65,18 +65,24 @@
                     <i class="fa fa-pencil fa-2x"></i>
                 </a>
             </div>
-            <div class="list-group">
-                <div class="list-group-item">
-                    <label>Name</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.name}}</h4>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <label>Name</label>
+                        <h4 class="list-group-item-heading" style="color: blue">{{dentist}}</h4>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Phone</label>
+                        <h4 class="list-group-item-heading" style="color: blue">{{dentistPhone dentist}}</h4>
+                    </div>
                 </div>
-                <div class="list-group-item">
-                    <label>E-mail</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.email}}</h4>
-                </div>
-                <div class="list-group-item">
-                    <label>Phone</label>
-                    <h4 class="list-group-item-heading" style="color: blue">{{dentist.phone}}</h4>
+            </div>
+            <div class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>E-mail</label>
+                        <h4 class="list-group-item-heading" style="color: blue">{{dentistEmail dentist}}</h4>
+                    </div>
                 </div>
             </div>
         </div>
